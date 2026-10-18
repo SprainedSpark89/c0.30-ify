@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "The optional, but recommended, resource pack for use with c0.30-ify.\nIt's also recommended to use Programmer Art and the Golden Days Texturepacks.\nThe recommended order is:\nc0.30-ify\nGolden Days Classic\nGolden Days Alpha\nGolden Days\nProgrammer Art\n",
+    "description": "The optional, but recommended, resource pack for use with c0.30-ify.\nIt's also recommended to use Programmer Art and the Golden Days Texturepacks.\nThe recommended order is:\nc0.30-ify\nGolden Days Classic\nGolden Days Alpha\nGolden Days Base\nProgrammer Art\n",
     "min_format": 88,
     "max_format": 88
   }

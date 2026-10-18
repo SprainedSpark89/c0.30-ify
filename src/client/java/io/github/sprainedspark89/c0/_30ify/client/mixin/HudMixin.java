@@ -37,7 +37,7 @@ public abstract class HudMixin {
 	@Shadow
 	@Final
 	private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
-
+	
 	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true, require = 0)
 	private void c030ify$hideSelectedItemName(CallbackInfo ci) {
 		if (C030IfyClient.classicGui) {
@@ -103,7 +103,7 @@ public abstract class HudMixin {
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void c030ify$renderClassicDebugText(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker,
 			CallbackInfo ci) {
-		if (!C030IfyClient.classicGui) {
+		if (!C030IfyClient.classicGui || ((Hud)(Object)this).isHidden()) {
 			return;
 		}
 
