@@ -1,0 +1,10 @@
+{
+    "vertex": "item",
+    "fragment": "item_white",
+    "samplers": [
+        { "name": "Sampler0" },
+        { "name": "Sampler1" },
+        { "name": "Sampler2" }
+    ],
+    "uniforms": []
+}

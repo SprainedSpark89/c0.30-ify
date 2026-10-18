@@ -1,0 +1,6 @@
+Refrenced for some code:
+Nostalgic tweaks
+Ported mod code:
+birevan | Made a c0.30 walking animation mod for me for b1.7.3 and some other versions, this uses some ported code from that (might of been rewritten though)
+Used assets:
+Roblox | Likely taken from https://freesound.org/ but I do not want to track all of the sounds down
