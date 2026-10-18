@@ -1,2 +1,2 @@
-# c030-ify-template-26.2
+# c0.30-ify
 Makes Modern Minecraft like c0.30
