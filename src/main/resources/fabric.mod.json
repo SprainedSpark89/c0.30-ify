@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
 	"id": "c030-ify",
-	"version": "${version}",
+	"version": "1.0.0_00",
 	"name": "c0.30-ify",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A Minecraft Mod that makes Modern Minecraft look like c0.30",
 	"authors": [
 		"SprainedSpark89"
 	],
