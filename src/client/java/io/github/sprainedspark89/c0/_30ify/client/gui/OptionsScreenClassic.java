@@ -1,17 +1,13 @@
 package io.github.sprainedspark89.c0._30ify.client.gui;
 
-import com.mojang.blaze3d.platform.InputConstants;
-
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 import io.github.sprainedspark89.c0._30ify.client.util.ClassicOptions;
 import net.minecraft.client.OptionInstance;
-import net.minecraft.client.OptionInstance.ValueSet;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
-import net.minecraft.client.gui.screens.options.controls.ControlsScreen;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;

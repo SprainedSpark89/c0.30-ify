@@ -6,13 +6,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import io.github.sprainedspark89.c0._30ify.client.accessor.ArrowRenderStateAccessor;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.state.ArrowRenderState;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
-
-import io.github.sprainedspark89.c0._30ify.client.accessor.ArrowRenderStateAccessor;
-import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 
 @Mixin(ArrowRenderer.class)
 public abstract class ArrowRendererMixin<

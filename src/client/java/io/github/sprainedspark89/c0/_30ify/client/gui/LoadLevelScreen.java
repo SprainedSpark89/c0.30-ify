@@ -19,8 +19,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.storage.LevelStorageException;
-import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraft.world.level.storage.LevelStorageSource.LevelCandidates;
+import net.minecraft.world.level.storage.LevelSummary;
 
 public class LoadLevelScreen extends Screen implements Runnable {
 	protected Screen parent;

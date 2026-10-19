@@ -1,8 +1,5 @@
 package io.github.sprainedspark89.c0._30ify.client.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joml.Vector3f;
 import org.jspecify.annotations.Nullable;
 
@@ -11,7 +8,6 @@ import com.mojang.math.Quadrant;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.block.dispatch.BlockModelRotation;
-import net.minecraft.client.renderer.block.dispatch.ModelState;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.ItemModelResolver;

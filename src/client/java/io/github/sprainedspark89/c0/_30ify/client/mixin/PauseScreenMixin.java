@@ -5,11 +5,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
-import io.github.sprainedspark89.c0._30ify.client.gui.GuiMainTitle;
 import io.github.sprainedspark89.c0._30ify.client.gui.PauseScreenClassic;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.PauseScreen;

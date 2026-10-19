@@ -1,13 +1,9 @@
 package io.github.sprainedspark89.c0._30ify.client.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 import io.github.sprainedspark89.c0._30ify.client.gui.ControlsScreenClassic;
-import io.github.sprainedspark89.c0._30ify.client.gui.OptionsScreenClassic;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;

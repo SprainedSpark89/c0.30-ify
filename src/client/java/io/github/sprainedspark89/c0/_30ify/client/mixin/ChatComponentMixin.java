@@ -4,8 +4,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import net.minecraft.client.gui.components.ChatComponent;
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
+import net.minecraft.client.gui.components.ChatComponent;
 
 @Mixin(ChatComponent.class)
 public class ChatComponentMixin {

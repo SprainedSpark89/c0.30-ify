@@ -1,7 +1,6 @@
 package io.github.sprainedspark89.c0._30ify.client.gui;
 
 
-import java.io.File;
 import java.util.List;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;

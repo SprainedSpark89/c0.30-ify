@@ -3,9 +3,8 @@ package io.github.sprainedspark89.c0._30ify.client.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import net.minecraft.client.renderer.entity.state.ArrowRenderState;
-
 import io.github.sprainedspark89.c0._30ify.client.accessor.ArrowRenderStateAccessor;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
 
 @Mixin(ArrowRenderState.class)
 public abstract class ArrowRenderStateMixin implements ArrowRenderStateAccessor {

@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 import io.github.sprainedspark89.c0._30ify.client.gui.OptionsScreenClassic;
-import io.github.sprainedspark89.c0._30ify.client.gui.PauseScreenClassic;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.OptionsScreen;
