@@ -102,7 +102,7 @@ public class GuiMainTitle extends Screen {
 				.addRenderableWidget(Button
 						.builder(Component.literal("Options..."),
 								var1 -> this.minecraft.gui
-										.setScreen(new OptionsScreen(this, this.minecraft.options, false)))
+										.setScreen(new OptionsScreen(this, this.minecraft.options)))
 						.bounds(this.width / 2 - 100, this.height / 4 + 120 + 12, 200, 20).build());
 		// this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 +
 		// 120 + 12, "Options..."));

@@ -1,7 +1,5 @@
 package io.github.sprainedspark89.c0._30ify.client;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.mojang.blaze3d.platform.InputConstants;
 
 import io.github.sprainedspark89.c0._30ify.C030Ify;
@@ -29,8 +27,8 @@ public class C030IfyClient implements ClientModInitializer {
 		toggleC030GUI = KeyMappingHelper.registerKeyMapping(
 			    new KeyMapping(
 			        "key.c030ify.classic_gui",
-			        InputConstants.Type.KEYSYM,
-			        GLFW.GLFW_KEY_C,
+			        InputConstants.Type.KEYBOARD,
+			        InputConstants.KEY_C,
 			        CATEGORY
 			    )
 			);

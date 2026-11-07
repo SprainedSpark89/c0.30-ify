@@ -70,7 +70,7 @@ public class MixinLivingEntityRenderer {
 	        method = "setupRotations",
 	        at = @At(
 	            value = "INVOKE",
-	            target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionfc;)V",
+	            target = "Lcom/mojang/blaze3d/vertex/PoseStack;rotateDegrees(Lcom/mojang/math/Axis;F)V",
 	            ordinal = 0,
 	            shift = At.Shift.AFTER
 	        )
@@ -95,15 +95,15 @@ public class MixinLivingEntityRenderer {
 
 	        float hurtDir = access.getHurtDir();
 
-	        poseStack.mulPose(Axis.YP.rotationDegrees(-hurtDir));
-	        poseStack.mulPose(Axis.ZP.rotationDegrees(-hurt));
-	        poseStack.mulPose(Axis.YP.rotationDegrees(hurtDir));
+	        poseStack.rotateDegrees(Axis.YP,(-hurtDir));
+	        poseStack.rotateDegrees(Axis.ZP,(-hurt));
+	        poseStack.rotateDegrees(Axis.YP,(hurtDir));
 	    }
 	
 	@Inject(method = "setupRotations",
 		    at = @At(
 		        value = "INVOKE",
-		        target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionfc;)V",
+		        target = "Lcom/mojang/blaze3d/vertex/PoseStack;rotateDegrees(Lcom/mojang/math/Axis;F)V",
 		        ordinal = 1,
 		        shift = At.Shift.BEFORE // nothing is done with the fall variable beforehand, so fall = 1 can happen before this without any issues
 		    ))
@@ -126,20 +126,20 @@ public class MixinLivingEntityRenderer {
 
 		float hurtDir = access.getHurtDir();
 
-		poseStack.mulPose(Axis.YP.rotationDegrees(-hurtDir));
-		poseStack.mulPose(Axis.ZP.rotationDegrees(-rotation));
-		poseStack.mulPose(Axis.YP.rotationDegrees(hurtDir));
+		poseStack.rotateDegrees(Axis.YP,(-hurtDir));
+		poseStack.rotateDegrees(Axis.ZP,(-rotation));
+		poseStack.rotateDegrees(Axis.YP,(hurtDir));
 	}
 	
 	@Redirect(
 		    method = "setupRotations",
 		    at = @At(
 		        value = "INVOKE",
-		        target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionfc;)V",
+		        target = "Lcom/mojang/blaze3d/vertex/PoseStack;rotateDegrees(Lcom/mojang/math/Axis;F)V",
 		        ordinal = 1
 		    )
 		)
-		private void c030$deathRotation(PoseStack poseStack, Quaternionfc quaternion) {
+		private void c030$deathRotation(PoseStack poseStack, Axis a, float f) {
 
 		    // do nothing
 		}

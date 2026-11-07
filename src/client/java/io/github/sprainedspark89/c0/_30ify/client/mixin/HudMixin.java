@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 import io.github.sprainedspark89.c0._30ify.client.util.ClassicChunkUpdates;
@@ -39,7 +39,7 @@ public abstract class HudMixin {
 	@Final
 	private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
 	
-	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true, require = 0)
+	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true)
 	private void c030ify$hideSelectedItemName(CallbackInfo ci) {
 		if (C030IfyClient.classicGui) {
 			ci.cancel();
@@ -153,17 +153,17 @@ public abstract class HudMixin {
 		}
 	}
 
-	@ModifyConstant(method = "extractAirBubbles", constant = @Constant(intValue = 8), require = 0)
+	@ModifyConstant(method = "extractAirBubbles", constant = @Constant(intValue = 8))
 	private int c030ify$reverseAirBubbleDirection(int value) {
 		return C030IfyClient.classicGui ? -8 : value;
 	}
 
-	@ModifyConstant(method = "extractAirBubbles", constant = @Constant(intValue = 9, ordinal = 0), require = 0)
+	@ModifyConstant(method = "extractAirBubbles", constant = @Constant(intValue = 9, ordinal = 0))
 	private int c030ify$reverseAirBubbleOffset(int value) {
 		return C030IfyClient.classicGui ? 0 : value;
 	}
 
-	@Redirect(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"), require = 0)
+	@Redirect(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
 	private void c030ify$hideOffhandDecoration(GuiGraphicsExtractor graphics, RenderPipeline pipeline,
 			Identifier sprite, int x, int y, int width, int height) {
 		if (C030IfyClient.classicGui

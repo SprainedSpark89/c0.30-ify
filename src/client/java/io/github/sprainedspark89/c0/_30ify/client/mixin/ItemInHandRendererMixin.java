@@ -12,16 +12,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.ItemInHandRenderer;
+import net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.level.PlayerRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-@Mixin(ItemInHandRenderer.class)
+@Mixin(FirstPersonHandsAndItemsRenderer.class)
 public class ItemInHandRendererMixin {
 	@Inject(at = @At("HEAD"), method = "renderPlayerArm", cancellable = true)
 	private void arms(final PoseStack poseStack,
@@ -29,7 +30,7 @@ public class ItemInHandRendererMixin {
 			int lightCoords,
 			float inverseArmHeight,
 			float attackValue,
-			HumanoidArm arm, CallbackInfo info) {
+			HumanoidArm arm, PlayerRenderState playerRenderState, CallbackInfo info) {
 //		AvatarRenderer<AbstractClientPlayer> renderer =
 //			    Minecraft.getInstance()
 //			        .getEntityRenderDispatcher()
@@ -99,9 +100,9 @@ public class ItemInHandRendererMixin {
 //		}
 		
 		
-		AvatarRenderer<AbstractClientPlayer> renderer = Minecraft.getInstance()
+		AvatarRenderer<AbstractClientPlayer> renderer = (AvatarRenderer<AbstractClientPlayer>) Minecraft.getInstance()
 		        .getEntityRenderDispatcher()
-		        .getPlayerRenderer(Minecraft.getInstance().player);
+		        .getRenderer(Minecraft.getInstance().player);
 
 		PlayerModel model = renderer.getModel();
 
@@ -137,17 +138,17 @@ public class ItemInHandRendererMixin {
 		);
 		
 		poseStack.translate(0.56F, -0.52F, -0.72F);
-		poseStack.mulPose(Axis.YP.rotationDegrees(sin * 80.0F));
-		poseStack.mulPose(Axis.XP.rotationDegrees(-Mth.sin(swing * swing * (float)Math.PI) * 20.0F));
+		poseStack.rotateDegrees(Axis.YP,(sin * 80.0F));
+		poseStack.rotateDegrees(Axis.XP,(-Mth.sin(swing * swing * (float)Math.PI) * 20.0F));
 
 		
-		poseStack.mulPose(Axis.YN.rotationDegrees(135.0F));
+		poseStack.rotateDegrees(Axis.YN,(135.0F));
 
 		// Classic transform
 
 		poseStack.scale(1.0F, -1.0F, -1.0F);
 		poseStack.translate(0.0F, 0.2F, 0.0F);
-		poseStack.mulPose(Axis.ZP.rotationDegrees(120));
+		poseStack.rotateDegrees(Axis.ZP,(120));
 
 		submitNodeCollector.submitModelPart(
 		    armM,

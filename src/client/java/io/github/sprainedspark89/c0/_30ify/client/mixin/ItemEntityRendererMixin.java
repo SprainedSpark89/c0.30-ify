@@ -59,7 +59,7 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 			poseStack.pushPose();
 
 			poseStack.translate(0.0F, bob + 0.125F, 0.0F);
-			poseStack.mulPose(Axis.YP.rotationDegrees(rot));
+			poseStack.rotateDegrees(Axis.YP,(rot));
 
 			submitMultipleFromCount(
 			    poseStack,

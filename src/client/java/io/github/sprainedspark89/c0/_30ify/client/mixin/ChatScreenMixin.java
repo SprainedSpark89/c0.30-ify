@@ -1,6 +1,5 @@
 package io.github.sprainedspark89.c0._30ify.client.mixin;
 
-import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -8,6 +7,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.mojang.blaze3d.platform.InputConstants;
 
 import io.github.sprainedspark89.c0._30ify.client.C030IfyClient;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -45,13 +46,13 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 	public void keyPressed(final KeyEvent event, CallbackInfoReturnable<Boolean> i) {
 		if (C030IfyClient.classicGui) {
 			switch (event.key()) {
-			case GLFW.GLFW_KEY_BACKSPACE -> {
+			case InputConstants.KEY_BACKSPACE -> {
 				if (this.input.getValue().length() > 0) {
 					this.input.setValue(this.input.getValue().substring(0, this.input.getValue().length() - 1));
 				}
 			}
 
-			case GLFW.GLFW_KEY_ENTER -> {
+			case InputConstants.KEY_RETURN -> {
 				String eventKey1 = this.input.getValue().trim();
 
 				if ((eventKey1 = eventKey1.trim()).length() > 0) {
@@ -66,7 +67,7 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 				this.minecraft.setScreenAndShow((Screen) null);
 			}
 
-			case GLFW.GLFW_KEY_ESCAPE -> {
+			case InputConstants.KEY_ESCAPE -> {
 				this.minecraft.setScreenAndShow((Screen) null);
 			}
 

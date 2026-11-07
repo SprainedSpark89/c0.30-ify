@@ -25,11 +25,11 @@ public class GameRendererMixin {
 				-Math.abs(Mth.cos(backwardsInterpolatedWalkDistance * (float) Math.PI) * bob),
 				0.0F
 			);
-			poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(backwardsInterpolatedWalkDistance * (float) Math.PI) * bob * 3.0F));
-			poseStack.mulPose(Axis.XP.rotationDegrees(Math.abs(Mth.cos(backwardsInterpolatedWalkDistance * (float) Math.PI + 0.2F) * bob) * 5.0F));
+			poseStack.rotateDegrees(Axis.ZP,(Mth.sin(backwardsInterpolatedWalkDistance * (float) Math.PI) * bob * 3.0F));
+			poseStack.rotateDegrees(Axis.XP,(Math.abs(Mth.cos(backwardsInterpolatedWalkDistance * (float) Math.PI + 0.2F) * bob) * 5.0F));
 
 			float tilt = ((CameraEntityRenderStateAccessor)cameraState.entityRenderState).getClassicTilt();
-			poseStack.mulPose(Axis.XP.rotationDegrees(tilt));
+			poseStack.rotateDegrees(Axis.XP,(tilt));
 		}
 		info.cancel();
 	}

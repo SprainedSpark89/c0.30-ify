@@ -12,7 +12,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
@@ -111,7 +111,7 @@ public class GuiMultiplayer extends Screen {
 	@Override
 	public boolean keyPressed(KeyEvent event) {
 	    switch (event.key()) {
-	        case GLFW.GLFW_KEY_BACKSPACE -> {
+	        case InputConstants.KEY_BACKSPACE -> {
 	            if (!ipText.isEmpty()) {
 	            	this.ipText = this.ipText.substring(0, this.ipText.length() - 1);
 	            }

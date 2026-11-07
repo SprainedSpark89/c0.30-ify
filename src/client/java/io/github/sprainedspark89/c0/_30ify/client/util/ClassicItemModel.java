@@ -17,6 +17,7 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.cuboid.CuboidFace;
 import net.minecraft.client.resources.model.cuboid.FaceBakery;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.client.resources.model.geometry.ItemQuads;
 import net.minecraft.client.resources.model.geometry.QuadCollection;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ItemOwner;
@@ -28,12 +29,14 @@ public final class ClassicItemModel implements ItemModel {
 	private final QuadCollection whiteQuads = null;
 
 	public ClassicItemModel(TextureAtlasSprite sprite, ModelBaker.Interner interner) {
-	    this.quads = build(sprite, interner, new BakedQuad.MaterialInfo(
+		this.quads = build(sprite, interner, new BakedQuad.MaterialInfo(
 			    sprite,
 			    ChunkSectionLayer.CUTOUT,
 			    Sheets.cutoutBlockItemSheet(),
+			    Sheets.cutoutBlockItemGlintSheet(),
+			    Sheets.cutoutBlockItemGlintSpecialSheet(),
 			    -1,
-			    true,
+			    null,
 			    0
 			));
 //	    this.whiteQuads = build(sprite, interner, new BakedQuad.MaterialInfo(
@@ -58,7 +61,7 @@ public final class ClassicItemModel implements ItemModel {
 		    layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);
 		}
 
-		layer.prepareQuadList().addAll(this.quads.getAll());
+		layer.setQuads(ItemQuads.split(this.quads.getAll()));
 
 //		ItemStackRenderState.LayerRenderState whiteLayer = output.newLayer();
 //

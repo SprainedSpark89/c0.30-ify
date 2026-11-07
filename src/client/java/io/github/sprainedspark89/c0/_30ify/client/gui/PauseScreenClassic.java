@@ -20,7 +20,7 @@ public final class PauseScreenClassic extends Screen {
 				.addRenderableWidget(Button
 						.builder(Component.literal("Options..."),
 								var1 -> this.minecraft.gui
-										.setScreen(new OptionsScreen(this, this.minecraft.options, false)))
+										.setScreen(new OptionsScreen(this, this.minecraft.options)))
 						.bounds(this.width / 2 - 100, this.height / 4, 200, 20).build());
 //		this.buttons.add(new Button(1, this.width / 2 - 100, this.height / 4 + 24, "Generate new level..."));
 		Button newLevel = this.addRenderableWidget(Button

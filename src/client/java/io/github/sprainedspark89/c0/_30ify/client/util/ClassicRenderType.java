@@ -2,10 +2,10 @@ package io.github.sprainedspark89.c0._30ify.client.util;
 
 import java.util.function.Function;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.pipeline.BlendFunction;
-import com.mojang.blaze3d.pipeline.ColorTargetState;
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.pipeline.BlendFunction;
+import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
 import net.minecraft.client.renderer.BindGroupLayouts;
@@ -19,7 +19,8 @@ import net.minecraft.util.Util;
 public class ClassicRenderType {
 	private static final RenderPipeline.Snippet GLOBALS_SNIPPET = RenderPipeline.builder().withBindGroupLayout(BindGroupLayouts.GLOBALS).buildSnippet();
 	private static final RenderPipeline.Snippet MATRICES_FOG_SNIPPET = RenderPipeline.builder(GLOBALS_SNIPPET)
-			.withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+			.withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
+			.withBindGroupLayout(BindGroupLayouts.PROJECTION)
 			.withBindGroupLayout(BindGroupLayouts.FOG)
 			.buildSnippet();
 	private static final RenderPipeline.Snippet MATRICES_FOG_LIGHT_DIR_SNIPPET = RenderPipeline.builder(MATRICES_FOG_SNIPPET)

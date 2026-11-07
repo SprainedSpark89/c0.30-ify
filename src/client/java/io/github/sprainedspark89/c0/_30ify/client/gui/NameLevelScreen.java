@@ -2,7 +2,7 @@ package io.github.sprainedspark89.c0._30ify.client.gui;
 
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 //import com.mojang.blaze3d.platform.InputConstants;
 
@@ -98,13 +98,13 @@ public final class NameLevelScreen extends Screen {
 	@Override
 	public boolean keyPressed(KeyEvent event) {
 	    switch (event.key()) {
-	        case GLFW.GLFW_KEY_BACKSPACE -> {
+	        case InputConstants.KEY_BACKSPACE -> {
 	            if (!name.isEmpty()) {
 	                name = name.substring(0, name.length() - 1);
 	            }
 	        }
 
-	        case GLFW.GLFW_KEY_ENTER -> {
+	        case InputConstants.KEY_RETURN -> {
 	            if (save.active) {
 	                save.onPress(event);
 	            }

@@ -29,7 +29,7 @@ public final class OptionsScreenClassic extends Screen {
 	public boolean keyPressed(final KeyEvent event) {
 		if (C030IfyClient.toggleC030GUI.matches(event)) {
 			C030IfyClient.classicGui = !C030IfyClient.classicGui;
-			this.minecraft.gui.setScreen(new OptionsScreen(parent, options, false));
+			this.minecraft.gui.setScreen(new OptionsScreen(parent, options));
 		}
 		return super.keyPressed(event);
 	}

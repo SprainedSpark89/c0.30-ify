@@ -4,6 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 import io.github.sprainedspark89.c0._30ify.client.accessor.AvatarStateAccessor;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.entity.ClientAvatarState;
 import net.minecraft.util.Mth;
 
@@ -16,8 +17,8 @@ public class ClientAvatarStateMixin implements AvatarStateAccessor {
 	private float classicTiltO;
 	
 	@Override
-	public float getInterpolatedClassicTilt(float partialTick) {
-	    return Mth.lerp(partialTick, classicTiltO, getClassicTilt());
+	public float getInterpolatedClassicTilt(DeltaTracker partialTick) {
+	    return Mth.lerp(partialTick.getGameTimeDeltaTicks(), classicTiltO, getClassicTilt());
 	}
 	
 	@Override

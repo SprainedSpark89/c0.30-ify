@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import io.github.sprainedspark89.c0._30ify.client.accessor.AvatarStateAccessor;
 import io.github.sprainedspark89.c0._30ify.client.accessor.CameraEntityRenderStateAccessor;
 import net.minecraft.client.Camera;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.entity.ClientAvatarState;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
@@ -20,7 +21,7 @@ public class CameraMixin {
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void c030ify$copyClassicTilt(
 	        CameraRenderState cameraState,
-	        float partialTicks,
+	        DeltaTracker deltaTracker,
 	        CallbackInfo ci
 	) {
 	    if (this.entity instanceof AbstractClientPlayer player) {
@@ -29,7 +30,7 @@ public class CameraMixin {
 	        ((CameraEntityRenderStateAccessor) cameraState.entityRenderState)
 	            .setClassicTilt(
 	                ((AvatarStateAccessor) avatarState)
-	                    .getInterpolatedClassicTilt(partialTicks)
+	                    .getInterpolatedClassicTilt(deltaTracker)
 	            );
 	    }
 	}
