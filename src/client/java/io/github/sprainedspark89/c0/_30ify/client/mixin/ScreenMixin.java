@@ -13,7 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin extends AbstractContainerEventHandler implements Renderable {
-	
+
 	@Shadow
 	public int width;
 	@Shadow
@@ -29,7 +29,7 @@ public abstract class ScreenMixin extends AbstractContainerEventHandler implemen
 		private void redirectTransparentBackground(Screen screen, GuiGraphicsExtractor graphics) {
 		    replaceBackground(graphics);
 		}
-	
+
 	@Redirect(
 		    method = "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
 		    at = @At(
@@ -40,13 +40,13 @@ public abstract class ScreenMixin extends AbstractContainerEventHandler implemen
 		private void redirectMenuBackground(Screen screen, GuiGraphicsExtractor graphics) {
 		    replaceBackground(graphics);
 		}
-	
+
 	private void replaceBackground(GuiGraphicsExtractor graphics) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
 	}
-	
+
 	@Overwrite
 	protected void extractPanorama(final GuiGraphicsExtractor graphics, final float a) {
-		
+
 	}
 }

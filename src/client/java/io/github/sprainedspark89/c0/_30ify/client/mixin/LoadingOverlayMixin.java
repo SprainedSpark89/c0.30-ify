@@ -27,7 +27,7 @@ public abstract class LoadingOverlayMixin {
 
 		int width = graphics.guiWidth();
 		int height = graphics.guiHeight();
-		
+
 		graphics.blit(RenderPipelines.GUI_TEXTURED, DIRT, 0, 0, width / 32, height / 32, width, height, 32, 32,
 				0xFF404040);
 

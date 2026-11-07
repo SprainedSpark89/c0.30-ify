@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.state.level.CameraEntityRenderState;
 public class CameraEntityRenderStateMixin implements CameraEntityRenderStateAccessor {
 	@Unique
 	private float classicTilt;
-	
+
 	@Override
 	public float getClassicTilt() {
 		return classicTilt;
@@ -20,6 +20,6 @@ public class CameraEntityRenderStateMixin implements CameraEntityRenderStateAcce
 	public void setClassicTilt(float classicTilt) {
 		this.classicTilt = classicTilt;
 	}
-	
-	
+
+
 }

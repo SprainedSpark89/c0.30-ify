@@ -19,6 +19,7 @@ public final class NewLevelScreen extends Screen {
 		this.parent = screen;
 	}
 
+	@Override
 	public final void init() {
 //		this.buttons.clear();
 		Button smallLevel = this
@@ -112,14 +113,14 @@ public final class NewLevelScreen extends Screen {
 	        this
 	    );
 	}
-	
+
 	@Override
 	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 //		fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
 		graphics.centeredText(this.font, "Generate new level", this.width / 2, 40, 0xFFFFFFFF);
 		super.extractRenderState(graphics, mouseX, mouseY, a);
 	}
-	
+
 	@Override
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);

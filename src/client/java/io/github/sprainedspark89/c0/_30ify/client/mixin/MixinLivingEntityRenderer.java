@@ -1,6 +1,5 @@
 package io.github.sprainedspark89.c0._30ify.client.mixin;
 
-import org.joml.Quaternionfc;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,8 +47,8 @@ public class MixinLivingEntityRenderer {
 		);
 
 	}
-	
-	
+
+
 	@Inject(method = "extractRenderState", at = @At("TAIL"))
 	private <T extends LivingEntity, S extends LivingEntityRenderState> void c030$extract(
 	        T entity,
@@ -62,10 +61,10 @@ public class MixinLivingEntityRenderer {
 	    access.setHurtDir(((ClassicHurtDirection) entity).c030$getHurtDir());
 	    access.setHurtTime(entity.hurtTime > 0 ? entity.hurtTime - partialTicks : 0.0F);
 	    access.setHurtDuration(entity.hurtDuration);
-	    
+
 	    state.hasRedOverlay = false;
 	}
-	
+
 	@Inject(
 	        method = "setupRotations",
 	        at = @At(
@@ -87,9 +86,10 @@ public class MixinLivingEntityRenderer {
 
 	        float hurt = access.getHurtTime();
 
-	        if (hurt <= 0.0F)
-	            return;
-	        
+	        if (hurt <= 0.0F) {
+				return;
+			}
+
 	        hurt /= access.getHurtDuration();
 	        hurt = Mth.sin(hurt * hurt * hurt * hurt * (float)Math.PI) * 14.0F;
 
@@ -99,7 +99,7 @@ public class MixinLivingEntityRenderer {
 	        poseStack.rotateDegrees(Axis.ZP,(-hurt));
 	        poseStack.rotateDegrees(Axis.YP,(hurtDir));
 	    }
-	
+
 	@Inject(method = "setupRotations",
 		    at = @At(
 		        value = "INVOKE",
@@ -118,8 +118,9 @@ public class MixinLivingEntityRenderer {
 
 		rotation = rotation * rotation * 800.0F;
 
-		if (rotation > 90.0F)
-		    rotation = 90.0F;
+		if (rotation > 90.0F) {
+			rotation = 90.0F;
+		}
 
 		LivingEntityRenderStateAccessor access =
 		        (LivingEntityRenderStateAccessor) state;
@@ -130,7 +131,7 @@ public class MixinLivingEntityRenderer {
 		poseStack.rotateDegrees(Axis.ZP,(-rotation));
 		poseStack.rotateDegrees(Axis.YP,(hurtDir));
 	}
-	
+
 	@Redirect(
 		    method = "setupRotations",
 		    at = @At(
@@ -143,7 +144,7 @@ public class MixinLivingEntityRenderer {
 
 		    // do nothing
 		}
-	
+
 //	@Inject(
 //		    method = "getWhiteOverlayProgress",
 //		    at = @At("HEAD"),
@@ -165,7 +166,7 @@ public class MixinLivingEntityRenderer {
 //		    	cir.setReturnValue(0.75F);
 //		    }
 //		}
-	
+
 	@Redirect(
 		    method = "submit",
 		    at = @At(
@@ -177,7 +178,7 @@ public class MixinLivingEntityRenderer {
 	        LivingEntityRenderer<?, ?, ?> renderer,
 	        S state
 	) {
-		
+
 		LivingEntityRenderStateAccessor access =
 	            (LivingEntityRenderStateAccessor) state;
 
@@ -191,5 +192,5 @@ public class MixinLivingEntityRenderer {
 		    return ((LivingEntityRendererAccessor) renderer)
 		            .c030$getWhiteOverlayProgress(state);
 		}
-	
+
 }

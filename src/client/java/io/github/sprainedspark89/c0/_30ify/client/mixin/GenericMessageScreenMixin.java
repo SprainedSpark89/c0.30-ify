@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier;
 
 @Mixin(GenericMessageScreen.class)
 public abstract class GenericMessageScreenMixin extends Screen {
-	
+
 	protected GenericMessageScreenMixin(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
@@ -27,19 +27,21 @@ public abstract class GenericMessageScreenMixin extends Screen {
 	// make
 	// this
 	// dirt?
-	
+
+	@Override
 	@Overwrite
 	protected void repositionElements() {
 	}
-	
+
+	@Override
 	@Overwrite
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-		float u = this.width / 32, 
+		float u = this.width / 32,
 				v = this.height / 32;
 		graphics.blit(RenderPipelines.GUI_TEXTURED, DIRT, 0, 0, u, v, this.width, this.height,
 				32, 32, 0xFF404040);
 	}
-	
+
 	@Override
 	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
 			final float a) {
@@ -47,11 +49,11 @@ public abstract class GenericMessageScreenMixin extends Screen {
 		int i3 = this.height * 240 / this.height;
 		String lastWord = this.titleCase(this.title.getString().split(" ")[this.title.getString().split(" ").length - 1]);
 		graphics.text(font, lastWord, (i8 - this.minecraft.font.width(lastWord)) / 2, i3 / 2 - 4 - 16, 0xFFFFFFFF);
-		
-		
+
+
 		graphics.text(font, this.title, (i8 - this.font.width(this.title)) / 2, i3 / 2 - 4 + 8, 0xFFFFFFFF);
 	}
-	
+
 	public String titleCase(String s) {
 		String lower = s.toLowerCase();
 		String upper = s.toUpperCase();

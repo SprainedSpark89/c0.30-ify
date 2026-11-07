@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ClassicChunkUpdates {
     private static final AtomicInteger UPDATES = new AtomicInteger(); // Kah-boom?
-    
+
     public static int chunkUpdates = 0;
 
     private ClassicChunkUpdates() {

@@ -33,7 +33,7 @@ public abstract class EditBoxMixin {
 
 		graphics.text(Minecraft.getInstance().font, ">", this.textX - 9, ((EditBox) (Object) this).getY(), 0xFFFFFFFF);
 	}
-	
+
 	@Inject(method = "extractWidgetRenderState", at = @At("TAIL"))
 	private void c030ify$renderPromptT(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick,
 			CallbackInfo ci) {

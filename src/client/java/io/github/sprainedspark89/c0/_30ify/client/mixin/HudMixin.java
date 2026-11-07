@@ -38,7 +38,7 @@ public abstract class HudMixin {
 	@Shadow
 	@Final
 	private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
-	
+
 	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true)
 	private void c030ify$hideSelectedItemName(CallbackInfo ci) {
 		if (C030IfyClient.classicGui) {
@@ -71,7 +71,7 @@ public abstract class HudMixin {
 			bar.extractRenderState(graphics, deltaTracker);
 		}
 	}
-	
+
 	@Redirect(
 		    method = "extractPlayerHealth",
 		    at = @At(
@@ -86,7 +86,7 @@ public abstract class HudMixin {
 
 		    return ((HudAccessor) instance).c030ify$getVehicleMaxHearts(entity);
 		}
-	
+
 	@Inject(method = "extractVehicleHealth", at = @At("HEAD"), cancellable = true)
 	private void extractVehicleHealth(final GuiGraphicsExtractor graphics, CallbackInfo ci) {
 		if (C030IfyClient.classicGui) {
@@ -213,7 +213,9 @@ public abstract class HudMixin {
 		    index = 5
 		)
 		private int c030ify$moveArmorToRight(int xLeft) {
-		    if (!C030IfyClient.classicGui) return xLeft;
+		    if (!C030IfyClient.classicGui) {
+				return xLeft;
+			}
 		    return (Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 + 91) - 9;
 		}
 

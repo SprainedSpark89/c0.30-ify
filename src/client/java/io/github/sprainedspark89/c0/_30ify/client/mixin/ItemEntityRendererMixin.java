@@ -23,18 +23,18 @@ import net.minecraft.world.entity.item.ItemEntity;
 
 @Mixin(ItemEntityRenderer.class)
 public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity, ItemEntityRenderState> {
-	
+
 	@Shadow
 	private RandomSource random;
-	
+
 	@Unique
 	public float c030$rot;
-	
+
 	protected ItemEntityRendererMixin(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 //	@Inject(method = "extractRenderState", at = @At("TAIL"))
 //	public void extractRenderState(final ItemEntity entity, final ItemEntityRenderState state, final float partialTicks, CallbackInfo i) {
 //		float rot = this.c030$rot + state.ageInTicks * 3.0F;
@@ -47,6 +47,7 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 //		((ItemEntityRenderStateAccessor) state).c030$setWhiteAlpha(alpha);
 //	}
 
+	@Override
 	@Overwrite
 	public void submit(final ItemEntityRenderState state, final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final CameraRenderState camera) {
 		if (!state.item.isEmpty()) {
@@ -55,7 +56,7 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 //			float spin =
 //				    c030$rot +
 //				    state.ageInTicks * 3.0F;
-			
+
 			poseStack.pushPose();
 
 			poseStack.translate(0.0F, bob + 0.125F, 0.0F);
@@ -74,7 +75,7 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 			super.submit(state, poseStack, submitNodeCollector, camera);
 		}
 	}
-	
+
 	@Overwrite
 	public static void submitMultipleFromCount(
 			final PoseStack poseStack,
@@ -88,12 +89,12 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 				random.setSeed(state.seed);
 				ItemStackRenderState item = state.item;
 
-				
+
 
 
 					for (int i = 0; i < amount; i++) {
 						poseStack.pushPose();
-						
+
 						if(i > 0) {
 							float xo = (random.nextFloat() * 2 - 1) * 0.05F;
 							float yo = (random.nextFloat() * 2 - 1) * 0.05F;
@@ -101,12 +102,12 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 
 							poseStack.translate(xo, yo, zo);
 						}
-						
+
 						item.submit(poseStack, submitNodeCollector, lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 						poseStack.popPose();
 				}
-					
-					
+
+
 			}
 		}
 }

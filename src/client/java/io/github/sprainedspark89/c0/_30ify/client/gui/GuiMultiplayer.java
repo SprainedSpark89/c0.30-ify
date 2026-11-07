@@ -42,6 +42,7 @@ public class GuiMultiplayer extends Screen {
 		this.inviteCodeMode = cipher; // custom stuff
 	}
 
+	@Override
 	public void tick() {
 		++this.updateCounter;
 	}
@@ -72,14 +73,14 @@ public class GuiMultiplayer extends Screen {
 //										this.mc.displayGuiScreen(new GuiConnecting(this.mc, string2[1], Integer.parseInt(string2[2])));
 										ConnectScreen.startConnecting(this, this.minecraft, ServerAddress.parseString(string2[1] + ":" + string2[2]), join, false, null);
 									}
-								} 
+								}
 									)
 						.bounds(this.width / 2 - 100, this.height / 4 + 96 + 12, 200, 20).build());
 //		this.controlList.add(new Button(0, this.width / 2 - 100, this.height / 4 + 96 + 12, "Connect"));
 		Button cancel = this
 				.addRenderableWidget(Button
 						.builder(Component.literal("Cancel"),
-								var1 -> 
+								var1 ->
 						this.minecraft.gui.setScreen(this.parentScreen))
 						.bounds(this.width / 2 - 100, this.height / 4 + 120 + 12, 200, 20).build());
 //		this.controlList.add(new Button(1, this.width / 2 - 100, this.height / 4 + 120 + 12, "Cancel"));
@@ -90,14 +91,14 @@ public class GuiMultiplayer extends Screen {
 //	protected void actionPerformed(Button guiButton1) {
 //		if(guiButton1.enabled) {
 //			if(guiButton1.id == 1) {
-//				
+//
 //			} else if(guiButton1.id == 0) {
-//				
+//
 //			}
 //
 //		}
 //	}
-	
+
 	private boolean updateConnectionTarget() {
 	    if (inviteCodeMode) {
 	        return cipherCode(ipText.trim());
@@ -107,7 +108,7 @@ public class GuiMultiplayer extends Screen {
 
 	    return !ipServer.isBlank();
 	}
-	
+
 	@Override
 	public boolean keyPressed(KeyEvent event) {
 	    switch (event.key()) {
@@ -131,7 +132,7 @@ public class GuiMultiplayer extends Screen {
 	    connect.active = updateConnectionTarget();
 	    return true;
 	}
-	
+
 	@Override
 	public boolean charTyped(CharacterEvent event) {
 	    String c = event.codepointAsString();

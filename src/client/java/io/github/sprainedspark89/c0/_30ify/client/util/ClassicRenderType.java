@@ -2,11 +2,11 @@ package io.github.sprainedspark89.c0._30ify.client.util;
 
 import java.util.function.Function;
 
-import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.renderpearl.api.pipeline.BlendFunction;
 import com.mojang.renderpearl.api.pipeline.ColorTargetState;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
 import com.mojang.renderpearl.api.pipeline.RenderPipeline;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
 import net.minecraft.client.renderer.BindGroupLayouts;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -36,13 +36,13 @@ public class ClassicRenderType {
 		        .withColorTargetState(new ColorTargetState(BlendFunction.ADDITIVE))
 		        .withShaderDefine("NO_TEXTURE")
 		        .buildSnippet();
-	
+
 	public static final RenderPipeline ITEM_WHITE = RenderPipelines.register(
 		    RenderPipeline.builder(ITEM_WHITE_SNIPPET)
 		        .withLocation("pipeline/item_white")
 		        .build()
 		);
-	
+
 	private static final Function<Identifier, RenderType> WHITE_ITEM = Util.memoize(
 			texture -> {
 				RenderSetup state = RenderSetup.builder(ITEM_WHITE)
@@ -55,13 +55,13 @@ public class ClassicRenderType {
 				return RenderType.create("item_white", state);
 			}
 		);
-	
+
 	public static RenderType whiteItem(final Identifier texture) {
 		return WHITE_ITEM.apply(texture);
 	}
-	
+
 	private static final RenderType WHITE_BLOCK_ITEM_SHEET = whiteItem(TextureAtlas.LOCATION_BLOCKS);
-	
+
 	public static RenderType whiteBlockItemSheet() {
 		return WHITE_BLOCK_ITEM_SHEET;
 	}

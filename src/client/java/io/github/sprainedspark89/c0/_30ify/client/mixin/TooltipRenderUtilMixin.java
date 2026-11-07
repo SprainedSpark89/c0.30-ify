@@ -13,7 +13,7 @@ import net.minecraft.resources.Identifier;
 
 @Mixin(TooltipRenderUtil.class)
 public class TooltipRenderUtilMixin {
-	
+
 	@Inject(method = "extractTooltipBackground", at = @At("HEAD"), cancellable = true)
 	private static void extractTooltipBackground(
 			final GuiGraphicsExtractor graphics, final int x, final int y, final int w, final int h, final @Nullable Identifier style, CallbackInfo ci

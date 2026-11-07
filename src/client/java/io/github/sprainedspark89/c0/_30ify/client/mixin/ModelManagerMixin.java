@@ -9,6 +9,7 @@ import net.minecraft.client.resources.model.ModelManager;
 
 @Mixin(ModelManager.class)
 public interface ModelManagerMixin extends ModelManagerAccessor {
+	@Override
 	@Accessor("blockStateModelSet")
     BlockStateModelSet c030$getBlockStateModels();
 }

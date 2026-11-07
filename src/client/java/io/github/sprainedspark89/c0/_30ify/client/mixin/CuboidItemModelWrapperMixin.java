@@ -50,7 +50,7 @@ public abstract class CuboidItemModelWrapperMixin {
 
         return baker.getModel(originalModel);
     }
-    
+
     @Inject(
     	    method = "bake",
     	    at = @At("RETURN")

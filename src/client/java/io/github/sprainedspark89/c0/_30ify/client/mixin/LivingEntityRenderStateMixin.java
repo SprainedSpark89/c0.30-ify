@@ -8,14 +8,14 @@ import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 
 @Mixin(LivingEntityRenderState.class)
 public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAccessor {
-	
+
 	@Unique
 	float hurtDir;
 	@Unique
 	float hurtTime;
 	@Unique
 	int hurtDuration;
-	
+
 	@Override
 	public float getHurtDir() {
 		return hurtDir;

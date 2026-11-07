@@ -15,12 +15,12 @@ public class ClientAvatarStateMixin implements AvatarStateAccessor {
 
 	@Unique
 	private float classicTiltO;
-	
+
 	@Override
 	public float getInterpolatedClassicTilt(DeltaTracker partialTick) {
 	    return Mth.lerp(partialTick.getGameTimeDeltaTicks(), classicTiltO, getClassicTilt());
 	}
-	
+
 	@Override
 	public void updateTilt(final float tTilt) {
 		this.classicTiltO = this.getClassicTilt();

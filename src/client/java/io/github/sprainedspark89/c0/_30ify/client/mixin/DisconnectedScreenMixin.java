@@ -16,11 +16,11 @@ import net.minecraft.network.chat.Component;
 
 @Mixin(DisconnectedScreen.class)
 public class DisconnectedScreenMixin extends Screen {
-	
+
 	@Shadow
 	@Final
 	private DisconnectionDetails details;
-	
+
 	protected DisconnectedScreenMixin(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
@@ -32,5 +32,5 @@ public class DisconnectedScreenMixin extends Screen {
 			this.minecraft.gui.setScreen(new ClassicErrorScreen(title.getString(), details.reason().getString(), true));
 		}
 	}
-	
+
 }

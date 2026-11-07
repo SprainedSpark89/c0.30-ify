@@ -56,7 +56,7 @@ public class ItemInHandRendererMixin {
 //		);
 //
 //		poseStack.popPose();
-	
+
 //		boolean isRightArm = arm != HumanoidArm.LEFT;
 //		float invert = !isRightArm ? 1.0F : -1.0F;
 //		float sqrtAttackValue = Mth.sqrt(attackValue);
@@ -79,7 +79,7 @@ public class ItemInHandRendererMixin {
 //		        .getEntityRenderDispatcher()
 //		        .getPlayerRenderer(Minecraft.getInstance().player);
 //		Identifier skinTexture = player.getSkin().body().texturePath();
-//	
+//
 //		PlayerModel model = avatarRenderer.getModel();
 //		if (!isRightArm) {
 //			model.rightArm.resetPose();
@@ -98,8 +98,8 @@ public class ItemInHandRendererMixin {
 //			model.rightArm.zRot = -0.1F;
 //			submitNodeCollector.submitModelPart(model.leftArm, poseStack, RenderTypes.entityTranslucent(skinTexture), lightCoords, OverlayTexture.NO_OVERLAY, null);
 //		}
-		
-		
+
+
 		AvatarRenderer<AbstractClientPlayer> renderer = (AvatarRenderer<AbstractClientPlayer>) Minecraft.getInstance()
 		        .getEntityRenderDispatcher()
 		        .getRenderer(Minecraft.getInstance().player);
@@ -121,27 +121,27 @@ public class ItemInHandRendererMixin {
 //		armM.x = 0;
 //		armM.y = 0;
 //		armM.z = 0;
-		
+
 		poseStack.translate(0, 2.0F / 16.0F, 0.0F);
 
 		poseStack.pushPose();
 		float swing = attackValue;
-		
+
 		float sin = Mth.sin(Mth.sqrt(swing) * (float)Math.PI);
 		float sin2 = Mth.sin(Mth.sqrt(swing) * (float)(Math.PI * 2.0));
 		float z = Mth.sin(swing * (float)Math.PI);
-		
+
 		poseStack.translate(
 		    -sin * 0.4F,
 		     sin2 * 0.2F,
 		    -z * 0.2F
 		);
-		
+
 		poseStack.translate(0.56F, -0.52F, -0.72F);
 		poseStack.rotateDegrees(Axis.YP,(sin * 80.0F));
 		poseStack.rotateDegrees(Axis.XP,(-Mth.sin(swing * swing * (float)Math.PI) * 20.0F));
 
-		
+
 		poseStack.rotateDegrees(Axis.YN,(135.0F));
 
 		// Classic transform
@@ -158,7 +158,7 @@ public class ItemInHandRendererMixin {
 		    OverlayTexture.NO_OVERLAY,
 		    null
 		);
-		
+
 
 		poseStack.popPose();
 

@@ -47,7 +47,7 @@ public class GuiMainTitle extends Screen {
 		this.minecraft.gui.setScreen(new TitleScreen());
 		return false;
 	}
-	
+
 	public GuiMainTitle(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
@@ -140,7 +140,7 @@ public class GuiMainTitle extends Screen {
 		// this.mc.renderEngine.getTexture("/dirt.png")); // likely should change to
 		// /assets/minecraft/textures/gui/menu_background.png
 		// GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		float u = this.width / 32, 
+		float u = this.width / 32,
 				v = this.height / 32 + updateCounter;
 		graphics.blit(RenderPipelines.GUI_TEXTURED, DIRT, 0, 0, u, v, this.width, this.height,
 				32, 32, 0xFF404040);
@@ -174,11 +174,11 @@ public class GuiMainTitle extends Screen {
 		graphics.pose().pushMatrix();
 		// GL11.glPushMatrix();
 		// splash
-		graphics.pose().translate((float) (this.width / 2 + 90), 70.0F);
+		graphics.pose().translate(this.width / 2 + 90, 70.0F);
 		// GL11.glTranslatef((float)(this.width / 2 + 90), 70.0F, 0.0F);
 		graphics.pose().rotate(-20F * Mth.DEG_TO_RAD);
 		graphics.pose().scale(1.8F - Mth
-				.abs(Mth.sin((float) (System.currentTimeMillis() % 1000L) / 1000.0F * (float) Math.PI * 2.0F) * 0.1F));
+				.abs(Mth.sin(System.currentTimeMillis() % 1000L / 1000.0F * (float) Math.PI * 2.0F) * 0.1F));
 		// GL11.glScalef(f4 = 1.8F -
 		// MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) /
 		// 1000.0F * (float)Math.PI * 2.0F) * 0.1F), f4, f4);

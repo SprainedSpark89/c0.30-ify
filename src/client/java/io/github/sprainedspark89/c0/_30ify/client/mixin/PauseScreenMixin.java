@@ -20,7 +20,7 @@ public class PauseScreenMixin extends Screen {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Shadow
 	@Final
 	private boolean showPauseMenu;
@@ -31,7 +31,7 @@ public class PauseScreenMixin extends Screen {
 			this.minecraft.gui.setScreen(new PauseScreenClassic(Component.literal("Game Menu")));
 		}
 	}
-	
+
 	@Inject(
 		    method = "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
 		    at = @At("HEAD"
@@ -48,7 +48,7 @@ public class PauseScreenMixin extends Screen {
 		}
 i.cancel();
 		}
-	
+
 	private void replaceBackground(GuiGraphicsExtractor graphics) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
 	}

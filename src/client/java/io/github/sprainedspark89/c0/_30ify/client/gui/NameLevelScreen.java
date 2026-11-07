@@ -118,7 +118,7 @@ public final class NameLevelScreen extends Screen {
 	    save.active = name.trim().length() > 1;
 	    return true;
 	}
-	
+
 	@Override
 	public boolean charTyped(CharacterEvent event) {
 	    String c = event.codepointAsString();

@@ -11,8 +11,8 @@ import net.minecraft.client.resources.model.sprite.SpriteId;
 
 @Mixin(AtlasManager.class)
 public interface AtlasManagerAccessor {
-	@Accessor("spriteLookup") 
+	@Accessor("spriteLookup")
 	Map<SpriteId, TextureAtlasSprite> getSpriteLookup();
-	
-	
+
+
 }

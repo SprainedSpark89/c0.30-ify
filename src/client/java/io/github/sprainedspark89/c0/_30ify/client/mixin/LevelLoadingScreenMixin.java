@@ -45,7 +45,7 @@ public abstract class LevelLoadingScreenMixin extends Screen {
 	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
 	private void c0_30ify$renderClassicLoadingScreen(GuiGraphicsExtractor graphics, int mouseX, int mouseY,
 			float partialTick, CallbackInfo ci) {
-		ScreenAccessor screen = (ScreenAccessor) (Object) this;
+		ScreenAccessor screen = (ScreenAccessor) this;
 
 		int width = screen.c0_30ify$getWidth();
 		int height = screen.c0_30ify$getHeight();
@@ -53,7 +53,7 @@ public abstract class LevelLoadingScreenMixin extends Screen {
 		int yCenter = height / 2;
 
 		Font font = screen.c0_30ify$getFont();
-		String lastWord = this.titleCase(this.DOWNLOADING_TERRAIN_TEXT.getString().split(" ")[this.DOWNLOADING_TERRAIN_TEXT.getString().split(" ").length - 1]);
+		String lastWord = this.titleCase(LevelLoadingScreenMixin.DOWNLOADING_TERRAIN_TEXT.getString().split(" ")[LevelLoadingScreenMixin.DOWNLOADING_TERRAIN_TEXT.getString().split(" ").length - 1]);
 		graphics.centeredText(font, lastWord, xCenter, yCenter - 20, -1);
 
 		graphics.centeredText(font, DOWNLOADING_TERRAIN_TEXT, xCenter, yCenter + 4, -1);
@@ -70,6 +70,7 @@ public abstract class LevelLoadingScreenMixin extends Screen {
 		ci.cancel();
 	}
 
+	@Override
 	@Overwrite
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int
 			mouseX, final int mouseY, final float a) {
@@ -79,7 +80,7 @@ public abstract class LevelLoadingScreenMixin extends Screen {
 				this.height,
 				32, 32, 0xFF404040);
 	}
-	
+
 	public String titleCase(String s) {
 		String lower = s.toLowerCase();
 		String upper = s.toUpperCase();

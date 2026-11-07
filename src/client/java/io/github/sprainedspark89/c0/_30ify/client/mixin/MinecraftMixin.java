@@ -38,7 +38,7 @@ public abstract class MinecraftMixin {
 		        e.printStackTrace();
 		    }
 		}
-	
+
 	@Inject(
 	        method = "renderFrame",
 	        at = @At(

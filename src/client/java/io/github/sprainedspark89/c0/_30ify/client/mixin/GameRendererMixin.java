@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.util.Mth;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin {	
+public class GameRendererMixin {
 	@Inject(at = @At("HEAD"), method = "bobView", cancellable = true)
 	private void bobbing(CameraRenderState cameraState, PoseStack poseStack, CallbackInfo info) {
 		if (cameraState.entityRenderState.isPlayer) {

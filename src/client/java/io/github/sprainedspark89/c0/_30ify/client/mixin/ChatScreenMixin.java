@@ -30,16 +30,16 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 
 	@Shadow
 	protected EditBox input;
-	
+
 	@Unique
 	private PlayerTabOverlay tabList;
-	
+
 	public boolean tabDown = false;
 
 	protected ChatScreenMixin(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
-		
+
 	}
 
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
@@ -83,7 +83,7 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 			i.cancel();
 		}
 	}
-	
+
 	@Override
 	public boolean keyReleased(final KeyEvent event) {
 		this.tabDown = this.minecraft.options.keyPlayerList.matches(event) ? false : this.tabDown;
@@ -145,7 +145,7 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 	public void init(CallbackInfo i) {
 		this.tabList = new PlayerTabOverlay(minecraft, this.minecraft.gui.hud);
 	}
-	
+
 	private void extractTabList(final GuiGraphicsExtractor graphics) {
 		Scoreboard scoreboard = this.minecraft.level.getScoreboard();
 		Objective displayObjective = scoreboard.getDisplayObjective(DisplaySlot.LIST);

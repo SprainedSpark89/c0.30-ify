@@ -19,7 +19,7 @@ public interface HudAccessor {
         int yLineAir,
         int xRight
     );
-    
+
     @Invoker("getVehicleMaxHearts")
     int c030ify$getVehicleMaxHearts(final @Nullable LivingEntity vehicle);
 }

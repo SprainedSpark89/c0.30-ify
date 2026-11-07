@@ -18,6 +18,7 @@ public abstract class OptionsSubScreenMixin extends OptionsSubScreen {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	protected void init() {
 		super.init();
 		if(C030IfyClient.classicGui) {

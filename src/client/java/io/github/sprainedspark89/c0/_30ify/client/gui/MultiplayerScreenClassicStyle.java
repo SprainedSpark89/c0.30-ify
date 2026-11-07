@@ -35,7 +35,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 	protected boolean isSaveScreen = false;
 	protected File levelFile;
 	Button load;
-	List<Button> levels = new ArrayList<Button>();
+	List<Button> levels = new ArrayList<>();
 	ServerData editingServer;
 	private ServerList servers;
 
@@ -44,6 +44,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 		this.parent = screen;
 	}
 
+	@Override
 	public void run() {
 		try {
 			if(this.fileLoaded) {
@@ -83,6 +84,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 //
 //	}
 
+	@Override
 	public void init() {
 //		(new Thread(this)).start();
 		this.servers = new ServerList(this.minecraft);
@@ -96,40 +98,40 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 			Button realms = this
 					.addRenderableWidget(Button
 							.builder(Component.literal("Mojang Direct"),
-									var1 -> 
+									var1 ->
 										this.minecraft.gui
 										.setScreen(new RealmsMainScreen(this)
 										))
 							.bounds(this.width / 2 - 100, this.height / 6 + i * 24, 200, 20).build());
 			i++;
-			
+
 			Button multiplayerCipher = this
 					.addRenderableWidget(Button
 							.builder(Component.literal("Level code"),
-									var1 -> { 
+									var1 -> {
 							editingServer = new ServerData(I18n.get("selectServer.defaultName"), "", ServerData.Type.OTHER);
 							this.minecraft.gui.setScreen(new GuiMultiplayer(this, true));
 									})
 							.bounds(this.width / 2 - 100, this.height / 6 + i * 24, 200, 20).build());
 			i++;
-			
+
 			Button multiplayerIP = this
 					.addRenderableWidget(Button
 							.builder(Component.literal("External level"),
-									var1 -> { 
+									var1 -> {
 							editingServer = new ServerData(I18n.get("selectServer.defaultName"), "", ServerData.Type.OTHER);
 							this.minecraft.gui.setScreen(new GuiMultiplayer(this, false));
 									})
 							.bounds(this.width / 2 - 100, this.height / 6 + i * 24, 200, 20).build());
-			
-			
+
+
 			i++;
 			for(; i < 5; ++i) {
 				Button empty = this
 						.addRenderableWidget(Button
 								.builder(Component.literal("-"),
 										var1 -> {
-											
+
 											})
 								.bounds(this.width / 2 - 100, this.height / 6 + i * 24, 200, 20).build());
 //				this.buttons.add(new Button(i1, this.width / 2 - 100, this.height / 6 + i1 * 24, "---"));
@@ -141,8 +143,8 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 //			}
 //			levels.add(level);
 //		}
-		
-		
+
+
 		load = this
 				.addRenderableWidget(Button
 						.builder(Component.literal("Other connection type.."),
@@ -165,7 +167,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 			this.minecraft.createWorldOpenFlows().openWorld(worlds.get(i).getLevelId(), null);
 		}
 	}
-	
+
 	private void directJoinCallback(final boolean result) {
 		if (result) {
 			ServerData serverData = this.servers.get(this.editingServer.ip);
@@ -205,7 +207,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 //			}
 //		}
 //	}
-	
+
 
 
 //	protected void loadLevel(File file) {
@@ -228,7 +230,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 //		this.minecraft.setScreen((Screen)null);
 //		this.minecraft.grabMouse();
 //	}
-	
+
 	@Override
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
@@ -257,6 +259,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 		}
 	}
 
+	@Override
 	public final void removed() {
 		super.removed();
 		if(this.fileChooser != null) {
@@ -265,6 +268,7 @@ public class MultiplayerScreenClassicStyle extends Screen implements Runnable {
 
 	}
 
+	@Override
 	public final void tick() {
 		super.tick();
 		if(this.levelFile != null) {

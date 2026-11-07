@@ -34,13 +34,14 @@ public class LoadLevelScreen extends Screen implements Runnable {
 	protected boolean isSaveScreen = false;
 	protected File levelFile;
 	Button load;
-	List<Button> levels = new ArrayList<Button>();
+	List<Button> levels = new ArrayList<>();
 
 	public LoadLevelScreen(Screen screen) {
 		super(Component.literal("Load level"));
 		this.parent = screen;
 	}
 
+	@Override
 	public void run() {
 		try {
 			if(this.fileLoaded) {
@@ -80,6 +81,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 //
 //	}
 
+	@Override
 	public void init() {
 //		(new Thread(this)).start();
 		List<LevelSummary> world;
@@ -89,7 +91,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 			e.printStackTrace();
 			world = List.of();
 		}
-		
+
 		List<LevelSummary> worlds = new ArrayList<>(world);
 		worlds.sort(Comparator.comparingLong(LevelSummary::getLastPlayed).reversed());
 
@@ -153,7 +155,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 //			}
 //		}
 //	}
-	
+
 	private CompletableFuture<List<LevelSummary>> loadLevels() {
 		LevelCandidates levelCandidates;
 		try {
@@ -190,7 +192,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 //		this.minecraft.setScreen((Screen)null);
 //		this.minecraft.grabMouse();
 //	}
-	
+
 	@Override
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
@@ -219,6 +221,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 		}
 	}
 
+	@Override
 	public final void removed() {
 		super.removed();
 		if(this.fileChooser != null) {
@@ -227,6 +230,7 @@ public class LoadLevelScreen extends Screen implements Runnable {
 
 	}
 
+	@Override
 	public final void tick() {
 		super.tick();
 		if(this.levelFile != null) {

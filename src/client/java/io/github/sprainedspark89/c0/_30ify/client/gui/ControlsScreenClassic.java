@@ -23,6 +23,7 @@ public final class ControlsScreenClassic extends Screen {
 		this.options = options;
 	}
 
+	@Override
 	public final void init() {
 //		System.out.println(width + " x " + height);
 		for(int i1 = 0; i1 < this.options.keyMappings.length; ++i1) {
@@ -37,7 +38,7 @@ public final class ControlsScreenClassic extends Screen {
 										.setScreen(this.parent))
 						.bounds(this.width / 2 - 100, this.height / 6 + 168, 200, 20).build());
 	}
-	
+
 	public void makeButton(int i1) {
 		int x = this.width / 2 - 155 + i1 % 2 * 160, y = this.height / 6 + 24 * (i1 >> 1);
 //		String key = this.options.keyMappings[i1].getName();
@@ -61,10 +62,10 @@ public final class ControlsScreenClassic extends Screen {
 									var1.setMessage(Component.literal("> "
 									    + Component.translatable(this.selectedKey.getName()).getString()
 									    + " <"));
-									
+
 								})
 						.bounds(x, y, 150, 20).build());
-//		
+//
 //		System.out.println("Button Width:" + optionButton.getWidth());
 //		System.out.println("Button Height:" + optionButton.getHeight());
 	}
@@ -100,7 +101,7 @@ public final class ControlsScreenClassic extends Screen {
 		graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
 		super.extractRenderState(graphics, mouseX, mouseY, a);
 	}
-	
+
 	@Override
 	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);

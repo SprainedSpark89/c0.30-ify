@@ -18,7 +18,7 @@ public abstract class AbstractButtonInactiveMixin extends AbstractWidget.WithIna
 		super(x, y, width, height, message);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Overwrite
 	protected void extractDefaultLabel(final ActiveTextCollector output) { // This is a feature, not a bug fix, totally
 		AbstractButton button = (AbstractButton) (Object) this;
@@ -37,8 +37,8 @@ public abstract class AbstractButtonInactiveMixin extends AbstractWidget.WithIna
 			    styledMessage
 			);
 	}
-	
-	
 
-	
+
+
+
 }

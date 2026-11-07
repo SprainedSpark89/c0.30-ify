@@ -34,7 +34,7 @@ public class ItemModelResolverMixin {
 			} else {
 				model.update(output, item, (ItemModelResolver) (Object) this, displayContext,
 					null, null, 0);
-	
+
 				ci.cancel();
 			}
 		}

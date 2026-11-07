@@ -54,7 +54,7 @@ public abstract class MixinHumanoidModel<T extends HumanoidRenderState> {
 			this.rightLeg.xRot =
 					Mth.cos(swing * 0.6662F)
 					* 1.4F * amount;
-	
+
 			this.leftLeg.xRot =
 					Mth.cos(swing * 0.6662F + (float)Math.PI)
 					* 1.4F * amount;
@@ -66,7 +66,7 @@ public abstract class MixinHumanoidModel<T extends HumanoidRenderState> {
 		this.leftArm.zRot =
 		        (Mth.cos(swing * 0.2812F) - 1.0F)
 		        * amount;
-		
+
 		this.rightLeg.yRot -= 0.005F;
 		this.leftLeg.yRot -= -0.005F;
 		this.rightLeg.zRot -= 0.005F;

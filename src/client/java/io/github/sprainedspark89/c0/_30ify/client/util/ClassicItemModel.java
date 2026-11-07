@@ -56,7 +56,7 @@ public final class ClassicItemModel implements ItemModel {
 		output.appendModelIdentityElement(this);
 
 		ItemStackRenderState.LayerRenderState layer = output.newLayer();
-		
+
 		if (item.hasFoil()) {
 		    layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);
 		}
@@ -67,7 +67,7 @@ public final class ClassicItemModel implements ItemModel {
 //
 //		whiteLayer.prepareQuadList().addAll(this.whiteQuads.getAll());
 	}
-	
+
 	private static QuadCollection build(
 	        TextureAtlasSprite sprite,
 	        ModelBaker.Interner interner,
@@ -80,7 +80,7 @@ public final class ClassicItemModel implements ItemModel {
 									    8.0F,
 									    8.0F
 									);
-			    
+
 		QuadCollection.Builder builder = new QuadCollection.Builder();
 		for(Direction dir : Direction.values()) {
 			builder.addCulledFace(dir, FaceBakery.bakeQuad(
@@ -95,8 +95,8 @@ public final class ClassicItemModel implements ItemModel {
 			    null
 			));
 		}
-		
+
 		return builder.build();
 	}
-	
+
 }

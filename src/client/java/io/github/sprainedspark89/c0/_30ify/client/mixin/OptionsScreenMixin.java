@@ -28,14 +28,14 @@ public class OptionsScreenMixin extends Screen {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Inject(method = "init", at = @At("TAIL"))
 	public void init(CallbackInfo i) {
 		if(C030IfyClient.classicGui) {
 			this.minecraft.gui.setScreen(new OptionsScreenClassic(lastScreen, options));
 		}
 	}
-	
+
 	@Override
 	public boolean keyPressed(final KeyEvent event) {
 		if(C030IfyClient.toggleC030GUI.matches(event)) {

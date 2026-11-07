@@ -16,39 +16,31 @@ import net.minecraft.resources.Identifier;
 public class C030IfyClient implements ClientModInitializer {
 	public static boolean classicGui = true;
 	public static KeyMapping toggleC030GUI;
-	private static final KeyMapping.Category CATEGORY =
-		    KeyMapping.Category.register(
-		        Identifier.fromNamespaceAndPath(C030Ify.MOD_ID, "key.categories.c030ify")
-		    );
- 
+	private static final KeyMapping.Category CATEGORY = KeyMapping.Category
+			.register(Identifier.fromNamespaceAndPath(C030Ify.MOD_ID, "key.categories.c030ify"));
+
 	public static String hoveredUsername = null;
+
 	@Override
 	public void onInitializeClient() {
-		toggleC030GUI = KeyMappingHelper.registerKeyMapping(
-			    new KeyMapping(
-			        "key.c030ify.classic_gui",
-			        InputConstants.Type.KEYBOARD,
-			        InputConstants.KEY_C,
-			        CATEGORY
-			    )
-			);
-		
+		toggleC030GUI = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.c030ify.classic_gui",
+				InputConstants.Type.KEYBOARD, InputConstants.KEY_C, CATEGORY));
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			   while (toggleC030GUI.consumeClick()) {
-			       classicGui = !classicGui;
-			   }
-			});
-		
-		FabricLoader.getInstance().getModContainer(C030Ify.MOD_ID).ifPresent(modContainer -> {
-            
-            ResourceManagerHelper.registerBuiltinResourcePack(
-                // The first argument is the ID of your pack
-                Identifier.fromNamespaceAndPath(C030Ify.MOD_ID, "c0.30-ify"), 
-                modContainer,
-                Component.literal("c0.30-ify"), // Display name in menu
-                ResourcePackActivationType.DEFAULT_ENABLED // NORMAL means optional. Users must enable it manually
-            );
+			while (toggleC030GUI.consumeClick()) {
+				classicGui = !classicGui;
+			}
 		});
-            
+
+		FabricLoader.getInstance().getModContainer(C030Ify.MOD_ID).ifPresent(modContainer -> {
+
+			ResourceManagerHelper.registerBuiltinResourcePack(
+					// The first argument is the ID of your pack
+					Identifier.fromNamespaceAndPath(C030Ify.MOD_ID, "c0.30-ify"), modContainer,
+					Component.literal("c0.30-ify"), // Display name in menu
+					ResourcePackActivationType.DEFAULT_ENABLED // NORMAL means optional. Users must enable it manually
+			);
+		});
+
 	}
 }

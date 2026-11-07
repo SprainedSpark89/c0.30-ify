@@ -21,7 +21,7 @@ public class AbstractClientPlayerMixin {
 		if (player.onGround() || player.isDeadOrDying()) {
 		    targetTilt = 0.0F;
 		}
-		
+
 		AvatarStateAccessor state =
 			    (AvatarStateAccessor)player.avatarState();
 

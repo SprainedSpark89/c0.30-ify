@@ -15,12 +15,13 @@ public final class DeathScreenClassic extends Screen {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
 	public final void init() {
 //		this.buttons.clear();
 		Button gen = this
 				.addRenderableWidget(Button
 						.builder(Component.literal("Generate new level..."),
-								var1 -> 
+								var1 ->
 									this.minecraft.gui
 									.setScreen(new NewLevelScreen(this)
 									))
@@ -29,7 +30,7 @@ public final class DeathScreenClassic extends Screen {
 		Button load = this
 				.addRenderableWidget(Button
 						.builder(Component.literal("Load level.."),
-								var1 -> 
+								var1 ->
 									this.minecraft.player.respawn()
 									)
 						.bounds(this.width / 2 - 100, this.height / 4 + 96, 200, 20).build());

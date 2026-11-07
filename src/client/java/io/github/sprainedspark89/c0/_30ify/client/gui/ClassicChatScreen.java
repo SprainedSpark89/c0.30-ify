@@ -38,21 +38,21 @@
 //					this.typedMsg = this.typedMsg.substring(0, this.typedMsg.length() - 1);
 //				}
 //			}
-//	
+//
 //			case GLFW.GLFW_KEY_ENTER -> {
 //				String eventKey1 = this.typedMsg.trim();
-//	
+//
 //				if ((eventKey1 = eventKey1.trim()).length() > 0) {
 //					this.minecraft.player.connection.sendChat(eventKey1);
 //				}
-//	
+//
 //				this.minecraft.setScreenAndShow((Screen) null);
 //			}
-//	
+//
 //			case GLFW.GLFW_KEY_ESCAPE -> {
 //				this.minecraft.setScreenAndShow((Screen) null);
 //			}
-//	
+//
 //			default -> {
 //				return super.keyPressed(event);
 //			}
@@ -98,7 +98,7 @@
 //		//		}
 //		return super.mouseClicked(event, doubleClick);
 //	}
-//	
+//
 //	@Override
 //	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 //	}

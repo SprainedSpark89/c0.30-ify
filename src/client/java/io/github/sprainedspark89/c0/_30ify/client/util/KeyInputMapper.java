@@ -18,11 +18,11 @@
 //        if(key == GLFW.GLFW_KEY_ESCAPE) {
 //        	return 1;
 //        }
-//        
+//
 //        if(key == GLFW.GLFW_KEY_BACKSPACE) {
 //        	return 14;
 //        }
-//        
+//
 //        if(key == GLFW.GLFW_KEY_ENTER) {
 //        	return 28;
 //        }
