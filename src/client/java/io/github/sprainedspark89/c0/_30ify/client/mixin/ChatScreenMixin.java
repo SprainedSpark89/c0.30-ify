@@ -1,5 +1,6 @@
 package io.github.sprainedspark89.c0._30ify.client.mixin;
 
+import org.lwjgl.sdl.SDLMouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -144,7 +145,7 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 	public void mouseClicked(final MouseButtonEvent event, final boolean doubleClick,
 			CallbackInfoReturnable<Boolean> i) {
 		if (C030IfyClient.classicGui) {
-			if (event.button() == 0 && C030IfyClient.hoveredUsername != null && tabDown) {
+			if (event.button() == SDLMouse.SDL_BUTTON_LEFT && C030IfyClient.hoveredUsername != null && tabDown) {
 				if (!this.input.getValue().isEmpty() && !this.input.getValue().endsWith(" ")) {
 					this.input.setValue(this.input.getValue() + " ");
 				}
