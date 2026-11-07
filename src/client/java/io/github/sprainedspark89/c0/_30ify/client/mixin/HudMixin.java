@@ -39,17 +39,29 @@ public abstract class HudMixin {
 	@Final
 	private static Identifier HOTBAR_OFFHAND_RIGHT_SPRITE;
 
-	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true)
-	private void c030ify$hideSelectedItemName(CallbackInfo ci) {
-		if (C030IfyClient.classicGui) {
-			ci.cancel();
+	@Redirect(method = "extractHotbarAndDecorations", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractExperienceLevel(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;I)V"), require = 1)
+	private static void c030ify$extractExperienceLevel(GuiGraphicsExtractor graphics, Font font, int experienceLevel) {
+		if (!C030IfyClient.classicGui) {
+			ContextualBarAccessor.c030ify$extractExperienceLevel(graphics, font, experienceLevel);
 		}
 	}
 
-	@ModifyConstant(method = "extractPlayerHealth", constant = @Constant(intValue = 39))
-	private int c030ify$moveHealthDown(int value) {
-		return C030IfyClient.classicGui ? 32 : value;
+	@ModifyConstant(method = "extractArmor", constant = @Constant(intValue = 8))
+	private static int c030ify$reverseArmorDirection(int value) {
+		return C030IfyClient.classicGui ? -8 : value;
 	}
+
+	@ModifyArg(
+		    method = "extractPlayerHealth",
+		    at = @At(
+		        value = "INVOKE",
+		        target = "Lnet/minecraft/client/gui/Hud;extractArmor(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;IIII)V"
+		    ),
+		    index = 4
+		)
+		private int c030ify$adjustArmorRowHeight(int healthRowHeight) {
+		    return C030IfyClient.classicGui ? 32 : healthRowHeight;
+		}
 
 	@ModifyConstant(method = "extractItemHotbar", constant = @Constant(intValue = 23))
 	private int c030ify$classicSelectionHeight(int value) {
@@ -72,32 +84,60 @@ public abstract class HudMixin {
 		}
 	}
 
-	@Redirect(
-		    method = "extractPlayerHealth",
-		    at = @At(
-		        value = "INVOKE",
-		        target = "Lnet/minecraft/client/gui/Hud;getVehicleMaxHearts(Lnet/minecraft/world/entity/LivingEntity;)I"
-		    )
-		)
-		private int c030ify$showHunger(Hud instance, LivingEntity entity) {
-		    if (C030IfyClient.classicGui) {
-		        return 0;
-		    }
+	@Redirect(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
+	private void c030ify$hideOffhandDecoration(GuiGraphicsExtractor graphics, RenderPipeline pipeline,
+			Identifier sprite, int x, int y, int width, int height) {
+		if (C030IfyClient.classicGui
+				&& (sprite.equals(HOTBAR_OFFHAND_LEFT_SPRITE) || sprite.equals(HOTBAR_OFFHAND_RIGHT_SPRITE))) {
+			Minecraft minecraft = Minecraft.getInstance();
+			Font font = minecraft.font;
+			if (!minecraft.player.getOffhandItem().isEmpty()) {
+				graphics.text(font,
+						itemName(minecraft.player.getOffhandItem()) + ": " + minecraft.player.getOffhandItem().count(),
+						x - (sprite.equals(HOTBAR_OFFHAND_RIGHT_SPRITE) ? 0 : width), y - height, 0xFFFFFFFF);
+			}
 
-		    return ((HudAccessor) instance).c030ify$getVehicleMaxHearts(entity);
+			return;
 		}
 
-	@Inject(method = "extractVehicleHealth", at = @At("HEAD"), cancellable = true)
-	private void extractVehicleHealth(final GuiGraphicsExtractor graphics, CallbackInfo ci) {
+		graphics.blitSprite(pipeline, sprite, x, y, width, height);
+	}
+
+	@Inject(method = "extractSelectedItemName", at = @At("HEAD"), cancellable = true)
+	private void c030ify$hideSelectedItemName(CallbackInfo ci) {
 		if (C030IfyClient.classicGui) {
 			ci.cancel();
 		}
-		}
+	}
 
-	@Redirect(method = "extractHotbarAndDecorations", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/contextualbar/ContextualBar;extractExperienceLevel(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/client/gui/Font;I)V"), require = 1)
-	private static void c030ify$extractExperienceLevel(GuiGraphicsExtractor graphics, Font font, int experienceLevel) {
-		if (!C030IfyClient.classicGui) {
-			ContextualBarAccessor.c030ify$extractExperienceLevel(graphics, font, experienceLevel);
+	@ModifyArg(
+	    method = "extractPlayerHealth",
+	    at = @At(
+	        value = "INVOKE",
+	        target = "Lnet/minecraft/client/gui/Hud;extractArmor(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;IIII)V"
+	    ),
+	    index = 5
+	)
+	private int c030ify$moveArmorToRight(int xLeft) {
+	    if (!C030IfyClient.classicGui) {
+			return xLeft;
+		}
+	    return (Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 + 91) - 9;
+	}
+
+	@ModifyConstant(method = "extractPlayerHealth", constant = @Constant(intValue = 39))
+	private int c030ify$moveHealthDown(int value) {
+		return C030IfyClient.classicGui ? 32 : value;
+	}
+
+	@Redirect(method = "extractPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Hud;extractAirBubbles(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;III)V"))
+	private void c030ify$positionAirBubbles(Hud hud, GuiGraphicsExtractor graphics, Player player, int vehicleHearts,
+			int yLineAir, int xRight) {
+		if (C030IfyClient.classicGui) {
+			int xLeft = graphics.guiWidth() / 2 - 91;
+			((HudAccessor) hud).c030ify$extractAirBubbles(graphics, player, vehicleHearts, yLineAir, xLeft);
+		} else {
+			((HudAccessor) hud).c030ify$extractAirBubbles(graphics, player, vehicleHearts, yLineAir, xRight);
 		}
 	}
 
@@ -137,22 +177,6 @@ public abstract class HudMixin {
 		}
 	}
 
-	public String itemName(ItemStack i) {
-		return i.getDisplayName().getString().replace("[", "").replace("]", "").split(" ")[0]
-				+ (i.count() > 1 ? "s" : "");
-	}
-
-	@Redirect(method = "extractPlayerHealth", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Hud;extractAirBubbles(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;III)V"))
-	private void c030ify$positionAirBubbles(Hud hud, GuiGraphicsExtractor graphics, Player player, int vehicleHearts,
-			int yLineAir, int xRight) {
-		if (C030IfyClient.classicGui) {
-			int xLeft = graphics.guiWidth() / 2 - 91;
-			((HudAccessor) hud).c030ify$extractAirBubbles(graphics, player, vehicleHearts, yLineAir, xLeft);
-		} else {
-			((HudAccessor) hud).c030ify$extractAirBubbles(graphics, player, vehicleHearts, yLineAir, xRight);
-		}
-	}
-
 	@ModifyConstant(method = "extractAirBubbles", constant = @Constant(intValue = 8))
 	private int c030ify$reverseAirBubbleDirection(int value) {
 		return C030IfyClient.classicGui ? -8 : value;
@@ -163,24 +187,20 @@ public abstract class HudMixin {
 		return C030IfyClient.classicGui ? 0 : value;
 	}
 
-	@Redirect(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
-	private void c030ify$hideOffhandDecoration(GuiGraphicsExtractor graphics, RenderPipeline pipeline,
-			Identifier sprite, int x, int y, int width, int height) {
-		if (C030IfyClient.classicGui
-				&& (sprite.equals(HOTBAR_OFFHAND_LEFT_SPRITE) || sprite.equals(HOTBAR_OFFHAND_RIGHT_SPRITE))) {
-			Minecraft minecraft = Minecraft.getInstance();
-			Font font = minecraft.font;
-			if (!minecraft.player.getOffhandItem().isEmpty()) {
-				graphics.text(font,
-						itemName(minecraft.player.getOffhandItem()) + ": " + minecraft.player.getOffhandItem().count(),
-						x - (sprite.equals(HOTBAR_OFFHAND_RIGHT_SPRITE) ? 0 : width), y - height, 0xFFFFFFFF);
-			}
+	@Redirect(
+		    method = "extractPlayerHealth",
+		    at = @At(
+		        value = "INVOKE",
+		        target = "Lnet/minecraft/client/gui/Hud;getVehicleMaxHearts(Lnet/minecraft/world/entity/LivingEntity;)I"
+		    )
+		)
+		private int c030ify$showHunger(Hud instance, LivingEntity entity) {
+		    if (C030IfyClient.classicGui) {
+		        return 0;
+		    }
 
-			return;
+		    return ((HudAccessor) instance).c030ify$getVehicleMaxHearts(entity);
 		}
-
-		graphics.blitSprite(pipeline, sprite, x, y, width, height);
-	}
 
 	@Inject(method = "extractSlot", at = @At("HEAD"), cancellable = true)
 	private void extractSlot(final GuiGraphicsExtractor graphics, final int x, final int y,
@@ -192,35 +212,15 @@ public abstract class HudMixin {
 		}
 	}
 
-	@ModifyArg(
-		    method = "extractPlayerHealth",
-		    at = @At(
-		        value = "INVOKE",
-		        target = "Lnet/minecraft/client/gui/Hud;extractArmor(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;IIII)V"
-		    ),
-		    index = 4
-		)
-		private int c030ify$adjustArmorRowHeight(int healthRowHeight) {
-		    return C030IfyClient.classicGui ? 32 : healthRowHeight;
-		}
-
-		@ModifyArg(
-		    method = "extractPlayerHealth",
-		    at = @At(
-		        value = "INVOKE",
-		        target = "Lnet/minecraft/client/gui/Hud;extractArmor(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/world/entity/player/Player;IIII)V"
-		    ),
-		    index = 5
-		)
-		private int c030ify$moveArmorToRight(int xLeft) {
-		    if (!C030IfyClient.classicGui) {
-				return xLeft;
+		@Inject(method = "extractVehicleHealth", at = @At("HEAD"), cancellable = true)
+		private void extractVehicleHealth(final GuiGraphicsExtractor graphics, CallbackInfo ci) {
+			if (C030IfyClient.classicGui) {
+				ci.cancel();
 			}
-		    return (Minecraft.getInstance().getWindow().getGuiScaledWidth() / 2 + 91) - 9;
-		}
+			}
 
-	@ModifyConstant(method = "extractArmor", constant = @Constant(intValue = 8))
-	private static int c030ify$reverseArmorDirection(int value) {
-		return C030IfyClient.classicGui ? -8 : value;
+	public String itemName(ItemStack i) {
+		return i.getDisplayName().getString().replace("[", "").replace("]", "").split(" ")[0]
+				+ (i.count() > 1 ? "s" : "");
 	}
 }

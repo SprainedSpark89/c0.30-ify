@@ -13,9 +13,40 @@ import net.minecraft.client.Options;
 import net.minecraft.sounds.SoundSource;
 
 public class ClassicOptions {
+	private static final Path CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve("c0_30ify.properties");
 	public static final OptionInstance<Boolean> SHOW_FPS = OptionInstance.createBoolean("options.c030ify.showFps",
 			false);
-	private static final Path CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve("c0_30ify.properties");
+
+	static {
+		Properties properties = new Properties();
+
+		if (Files.exists(CONFIG_FILE)) {
+			try (var reader = Files.newBufferedReader(CONFIG_FILE)) {
+				properties.load(reader);
+				SHOW_FPS.set(Boolean.parseBoolean(properties.getProperty("showFps", "false")));
+			} catch (IOException e) {
+				System.err.println("Failed to load c0_30ify settings: " + e.getMessage());
+			}
+		}
+	}
+
+	private static String addPluses(String name, int renderDistance, long current) {
+		long next = current << 2;
+		long pluses = renderDistance - current / 16;
+
+		StringBuilder builder = new StringBuilder(name);
+
+		for (long i = 0; i < pluses; i++) {
+			builder.append('+');
+		}
+
+		return builder.toString();
+	}
+
+	private static OptionInstance<Double>[] getAllSoundOptionsExceptMasterAndMusic(Options options) {
+		return Arrays.stream(SoundSource.values()).filter(s -> s != SoundSource.MASTER && s != SoundSource.MUSIC)
+				.map(options::getSoundSourceOptionInstance).toArray(OptionInstance[]::new);
+	}
 
 	public static OptionInstance[] getMainOptionsMenu(Options options) {
 		return new OptionInstance[] { options.getSoundSourceOptionInstance(SoundSource.MUSIC),
@@ -28,52 +59,6 @@ public class ClassicOptions {
 				options.renderDistance(), options.bobView(), options.enableVsync(), // no 3d anaglyph, not
 				// reimplementing it
 				options.framerateLimit() };
-	}
-
-	public static void handleOptionChange(OptionInstance<?> option, Options options) {
-		if (option == options.getSoundSourceOptionInstance(SoundSource.BLOCKS)) {
-			OptionInstance<Double>[] sounds = getAllSoundOptionsExceptMasterAndMusic(options);
-			if ((double) option.get() != 0) {
-				for (OptionInstance<Double> o : sounds) {
-					o.set(0D);
-				}
-			} else {
-				for (OptionInstance<Double> o : sounds) {
-					o.set(1D);
-				}
-			}
-		} else if (option == options.getSoundSourceOptionInstance(SoundSource.MUSIC)) {
-			OptionInstance<Double> o = (OptionInstance<Double>) option;
-			if ((double) option.get() != 0) {
-				o.set(0D);
-			} else {
-				o.set(1D);
-			}
-		} else {
-			if (option.get() instanceof Integer) {
-				OptionInstance<Integer> o = (OptionInstance<Integer>) option;
-				OptionInstance.ValueSet<Integer> values = o.values();
-
-				if (values instanceof OptionInstance.IntRangeBase range) {
-					Integer next = range.next(o.get()).orElse(range.minInclusive());
-					o.set(next);
-				}
-			} else if (option.get() instanceof Boolean) {
-				OptionInstance<Boolean> o = (OptionInstance<Boolean>) option;
-				o.set(!o.get());
-			} else if (option.values() instanceof OptionInstance.Enum<?> e) {
-				List<?> list = e.values();
-				int index = list.indexOf(option.get());
-				index = (index + 1) % list.size();
-
-				((OptionInstance<Object>) option).set(list.get(index));
-			}
-		}
-	}
-
-	private static OptionInstance<Double>[] getAllSoundOptionsExceptMasterAndMusic(Options options) {
-		return Arrays.stream(SoundSource.values()).filter(s -> s != SoundSource.MASTER && s != SoundSource.MUSIC)
-				.map(options::getSoundSourceOptionInstance).toArray(OptionInstance[]::new);
 	}
 
 	public final static String getMessage(OptionInstance option, Options options) { // need to add things, change
@@ -144,28 +129,43 @@ public class ClassicOptions {
 		return "";
 	}
 
-	private static String addPluses(String name, int renderDistance, long current) {
-		long next = current << 2;
-		long pluses = renderDistance - current / 16;
+	public static void handleOptionChange(OptionInstance<?> option, Options options) {
+		if (option == options.getSoundSourceOptionInstance(SoundSource.BLOCKS)) {
+			OptionInstance<Double>[] sounds = getAllSoundOptionsExceptMasterAndMusic(options);
+			if ((double) option.get() != 0) {
+				for (OptionInstance<Double> o : sounds) {
+					o.set(0D);
+				}
+			} else {
+				for (OptionInstance<Double> o : sounds) {
+					o.set(1D);
+				}
+			}
+		} else if (option == options.getSoundSourceOptionInstance(SoundSource.MUSIC)) {
+			OptionInstance<Double> o = (OptionInstance<Double>) option;
+			if ((double) option.get() != 0) {
+				o.set(0D);
+			} else {
+				o.set(1D);
+			}
+		} else {
+			if (option.get() instanceof Integer) {
+				OptionInstance<Integer> o = (OptionInstance<Integer>) option;
+				OptionInstance.ValueSet<Integer> values = o.values();
 
-		StringBuilder builder = new StringBuilder(name);
+				if (values instanceof OptionInstance.IntRangeBase range) {
+					Integer next = range.next(o.get()).orElse(range.minInclusive());
+					o.set(next);
+				}
+			} else if (option.get() instanceof Boolean) {
+				OptionInstance<Boolean> o = (OptionInstance<Boolean>) option;
+				o.set(!o.get());
+			} else if (option.values() instanceof OptionInstance.Enum<?> e) {
+				List<?> list = e.values();
+				int index = list.indexOf(option.get());
+				index = (index + 1) % list.size();
 
-		for (long i = 0; i < pluses; i++) {
-			builder.append('+');
-		}
-
-		return builder.toString();
-	}
-
-	static {
-		Properties properties = new Properties();
-
-		if (Files.exists(CONFIG_FILE)) {
-			try (var reader = Files.newBufferedReader(CONFIG_FILE)) {
-				properties.load(reader);
-				SHOW_FPS.set(Boolean.parseBoolean(properties.getProperty("showFps", "false")));
-			} catch (IOException e) {
-				System.err.println("Failed to load c0_30ify settings: " + e.getMessage());
+				((OptionInstance<Object>) option).set(list.get(index));
 			}
 		}
 	}

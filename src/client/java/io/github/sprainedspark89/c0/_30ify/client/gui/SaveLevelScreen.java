@@ -17,25 +17,6 @@ public final class SaveLevelScreen extends LoadLevelScreen {
 	}
 
 	@Override
-	public final void init() {
-		super.init();
-		load.setMessage(Component.literal("Save file..."));
-		this.setLevels();
-	}
-
-	protected final void setLevels() {
-		for(Button level : levels) {
-			level.setMessage(level.getMessage());
-//			((Button)this.buttons.get(i2)).msg = level;
-			level.visible = true;
-//			((Button)this.buttons.get(i2)).visible = true;
-			level.active = !this.minecraft.isDemo();
-//			((Button)this.buttons.get(i2)).enabled = this.minecraft.user.hasPaid;
-		}
-
-	}
-
-	@Override
 	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
 		super.extractRenderState(graphics, mouseX, mouseY, a);
 		if(this.minecraft.isDemo()) {
@@ -44,6 +25,18 @@ public final class SaveLevelScreen extends LoadLevelScreen {
 			graphics.centeredText(this.font, "Purchase the game to be able", this.width / 2, 96, 0xFF000000 + 14712960);
 			graphics.centeredText(this.font, "to save your levels online.", this.width / 2, 104, 0xFF000000 + 14712960);
 		}
+	}
+
+	@Override
+	public final void init() {
+		super.init();
+		load.setMessage(Component.literal("Save file..."));
+		this.setLevels();
+	}
+
+	@Override
+	public void loadLevel(List<LevelSummary> worlds, int i, Button button) {
+		this.minecraft.gui.setScreen(new NameLevelScreen(this, button.getMessage().getString(), worlds, i));
 	}
 
 //	protected final void loadLevel(File file) {
@@ -57,8 +50,15 @@ public final class SaveLevelScreen extends LoadLevelScreen {
 //		this.minecraft.setScreen(this.parent);
 //	}
 
-	@Override
-	public void loadLevel(List<LevelSummary> worlds, int i, Button button) {
-		this.minecraft.gui.setScreen(new NameLevelScreen(this, button.getMessage().getString(), worlds, i));
+	protected final void setLevels() {
+		for(Button level : levels) {
+			level.setMessage(level.getMessage());
+//			((Button)this.buttons.get(i2)).msg = level;
+			level.visible = true;
+//			((Button)this.buttons.get(i2)).visible = true;
+			level.active = !this.minecraft.isDemo();
+//			((Button)this.buttons.get(i2)).enabled = this.minecraft.user.hasPaid;
+		}
+
 	}
 }

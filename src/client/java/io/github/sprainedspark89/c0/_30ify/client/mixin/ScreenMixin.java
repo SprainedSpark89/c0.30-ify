@@ -15,20 +15,14 @@ import net.minecraft.client.gui.screens.Screen;
 public abstract class ScreenMixin extends AbstractContainerEventHandler implements Renderable {
 
 	@Shadow
-	public int width;
-	@Shadow
 	public int height;
+	@Shadow
+	public int width;
 
-	@Redirect(
-		    method = "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
-		    at = @At(
-		        value = "INVOKE",
-		        target = "Lnet/minecraft/client/gui/screens/Screen;extractTransparentBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"
-		    )
-		)
-		private void redirectTransparentBackground(Screen screen, GuiGraphicsExtractor graphics) {
-		    replaceBackground(graphics);
-		}
+	@Overwrite
+	protected void extractPanorama(final GuiGraphicsExtractor graphics, final float a) {
+
+	}
 
 	@Redirect(
 		    method = "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
@@ -41,12 +35,18 @@ public abstract class ScreenMixin extends AbstractContainerEventHandler implemen
 		    replaceBackground(graphics);
 		}
 
+	@Redirect(
+		    method = "extractBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V",
+		    at = @At(
+		        value = "INVOKE",
+		        target = "Lnet/minecraft/client/gui/screens/Screen;extractTransparentBackground(Lnet/minecraft/client/gui/GuiGraphicsExtractor;)V"
+		    )
+		)
+		private void redirectTransparentBackground(Screen screen, GuiGraphicsExtractor graphics) {
+		    replaceBackground(graphics);
+		}
+
 	private void replaceBackground(GuiGraphicsExtractor graphics) {
 		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
-	}
-
-	@Overwrite
-	protected void extractPanorama(final GuiGraphicsExtractor graphics, final float a) {
-
 	}
 }

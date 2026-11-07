@@ -16,6 +16,11 @@ public class ClassicErrorScreen extends Screen {
     }
 
     @Override
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+    	graphics.fillGradient(0, 0, this.width, this.height, -12574688, -11530224);
+    }
+
+    @Override
     public void extractRenderState(
         GuiGraphicsExtractor graphics,
         int mouseX,
@@ -25,11 +30,6 @@ public class ClassicErrorScreen extends Screen {
     	graphics.centeredText(this.font, this.title, this.width / 2, 90, 0xFFFFFFFF);
     	graphics.centeredText(this.font, this.desc, this.width / 2, 110, 0xFFFFFFFF);
     	super.extractRenderState(graphics, mouseX, mouseY, partialTick);
-    }
-
-    @Override
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-    	graphics.fillGradient(0, 0, this.width, this.height, -12574688, -11530224);
     }
 
     @Override

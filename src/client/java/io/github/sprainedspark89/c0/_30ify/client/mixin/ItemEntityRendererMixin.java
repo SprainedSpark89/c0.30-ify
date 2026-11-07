@@ -24,58 +24,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 @Mixin(ItemEntityRenderer.class)
 public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity, ItemEntityRenderState> {
 
-	@Shadow
-	private RandomSource random;
-
-	@Unique
-	public float c030$rot;
-
-	protected ItemEntityRendererMixin(Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub
-	}
-
-//	@Inject(method = "extractRenderState", at = @At("TAIL"))
-//	public void extractRenderState(final ItemEntity entity, final ItemEntityRenderState state, final float partialTicks, CallbackInfo i) {
-//		float rot = this.c030$rot + state.ageInTicks * 3.0F;
-//
-//		float alpha = Mth.sin(rot / 10.0F);
-//		alpha = alpha * 0.5F + 0.5F;
-//		alpha *= alpha * alpha;
-//		alpha *= 0.4F;
-//
-//		((ItemEntityRenderStateAccessor) state).c030$setWhiteAlpha(alpha);
-//	}
-
-	@Override
-	@Overwrite
-	public void submit(final ItemEntityRenderState state, final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final CameraRenderState camera) {
-		if (!state.item.isEmpty()) {
-			float rot = this.c030$rot + state.ageInTicks * 3.0F;
-			float bob = Mth.sin(rot / 10.0F) * 0.1F + 0.1F;
-//			float spin =
-//				    c030$rot +
-//				    state.ageInTicks * 3.0F;
-
-			poseStack.pushPose();
-
-			poseStack.translate(0.0F, bob + 0.125F, 0.0F);
-			poseStack.rotateDegrees(Axis.YP,(rot));
-
-			submitMultipleFromCount(
-			    poseStack,
-			    submitNodeCollector,
-			    state.lightCoords,
-			    state,
-			    this.random
-			);
-
-			poseStack.popPose();
-
-			super.submit(state, poseStack, submitNodeCollector, camera);
-		}
-	}
-
 	@Overwrite
 	public static void submitMultipleFromCount(
 			final PoseStack poseStack,
@@ -110,4 +58,56 @@ public abstract class ItemEntityRendererMixin extends EntityRenderer<ItemEntity,
 
 			}
 		}
+
+	@Unique
+	public float c030$rot;
+
+	@Shadow
+	private RandomSource random;
+
+//	@Inject(method = "extractRenderState", at = @At("TAIL"))
+//	public void extractRenderState(final ItemEntity entity, final ItemEntityRenderState state, final float partialTicks, CallbackInfo i) {
+//		float rot = this.c030$rot + state.ageInTicks * 3.0F;
+//
+//		float alpha = Mth.sin(rot / 10.0F);
+//		alpha = alpha * 0.5F + 0.5F;
+//		alpha *= alpha * alpha;
+//		alpha *= 0.4F;
+//
+//		((ItemEntityRenderStateAccessor) state).c030$setWhiteAlpha(alpha);
+//	}
+
+	protected ItemEntityRendererMixin(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	@Overwrite
+	public void submit(final ItemEntityRenderState state, final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final CameraRenderState camera) {
+		if (!state.item.isEmpty()) {
+			float rot = this.c030$rot + state.ageInTicks * 3.0F;
+			float bob = Mth.sin(rot / 10.0F) * 0.1F + 0.1F;
+//			float spin =
+//				    c030$rot +
+//				    state.ageInTicks * 3.0F;
+
+			poseStack.pushPose();
+
+			poseStack.translate(0.0F, bob + 0.125F, 0.0F);
+			poseStack.rotateDegrees(Axis.YP,(rot));
+
+			submitMultipleFromCount(
+			    poseStack,
+			    submitNodeCollector,
+			    state.lightCoords,
+			    state,
+			    this.random
+			);
+
+			poseStack.popPose();
+
+			super.submit(state, poseStack, submitNodeCollector, camera);
+		}
+	}
 }

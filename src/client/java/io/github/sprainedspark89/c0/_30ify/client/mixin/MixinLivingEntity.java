@@ -16,15 +16,15 @@ public abstract class MixinLivingEntity implements ClassicHurtDirection {
     @Unique
     private float c030$hurtDir;
 
+    @Override
+    public float c030$getHurtDir() {
+        return this.c030$hurtDir;
+    }
+
     @Inject(method = "indicateDamage", at = @At("HEAD"))
     private void c030$storeDirection(double xd, double zd, CallbackInfo ci) {
         this.c030$hurtDir =
             (float)(Mth.atan2(zd, xd) * 180.0F / (float)Math.PI
                     - ((LivingEntity)(Object)this).getYRot());
-    }
-
-    @Override
-    public float c030$getHurtDir() {
-        return this.c030$hurtDir;
     }
 }

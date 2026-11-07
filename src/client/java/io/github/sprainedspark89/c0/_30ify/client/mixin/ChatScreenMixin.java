@@ -31,15 +31,63 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 	@Shadow
 	protected EditBox input;
 
+	public boolean tabDown = false;
+
 	@Unique
 	private PlayerTabOverlay tabList;
-
-	public boolean tabDown = false;
 
 	protected ChatScreenMixin(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
 
+	}
+
+	@Override
+	public boolean charTyped(CharacterEvent event) {
+		if (!C030IfyClient.classicGui) {
+			return super.charTyped(event);
+		}
+		String eventCharacter = event.codepointAsString();
+
+		if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.:-_\'*!\\\"#%/()=+?[]{}<>@|$;"
+				.indexOf(eventCharacter) >= 0
+				&& this.input.getValue().length() < 64 - (this.minecraft.getUser().getName().length() + 2)) {
+			this.input.setValue(this.input.getValue() + eventCharacter);
+		}
+
+		return true;
+	}
+
+	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
+	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
+			final float a, CallbackInfo i) {
+		if (C030IfyClient.classicGui) {
+			graphics.fill(2, this.height - 14, this.width - 2, this.height - 2,
+					this.minecraft.options.getBackgroundColor(Integer.MIN_VALUE));
+			this.minecraft.gui.hud.getChat().extractRenderState(graphics, this.font,
+					this.minecraft.gui.hud.getGuiTicks(), mouseX, mouseY, ChatComponent.DisplayMode.FOREGROUND, false);
+			super.extractRenderState(graphics, mouseX, mouseY, a);
+			this.extractTabList(graphics);
+			i.cancel();
+		}
+	}
+
+	private void extractTabList(final GuiGraphicsExtractor graphics) {
+		Scoreboard scoreboard = this.minecraft.level.getScoreboard();
+		Objective displayObjective = scoreboard.getDisplayObjective(DisplaySlot.LIST);
+		if (!tabDown
+			|| this.minecraft.isLocalServer() && this.minecraft.player.connection.getListedOnlinePlayers().size() <= 1 && displayObjective == null) {
+			this.tabList.setVisible(false);
+		} else {
+			this.tabList.setVisible(true);
+			graphics.nextStratum();
+			this.tabList.extractRenderState(graphics, graphics.guiWidth(), scoreboard, displayObjective);
+		}
+	}
+
+	@Inject(method = "init", at = @At("TAIL"), cancellable = true)
+	public void init(CallbackInfo i) {
+		this.tabList = new PlayerTabOverlay(minecraft, this.minecraft.gui.hud);
 	}
 
 	@Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
@@ -84,40 +132,12 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 		}
 	}
 
+	// Patches for the rebellion \/
+
 	@Override
 	public boolean keyReleased(final KeyEvent event) {
 		this.tabDown = this.minecraft.options.keyPlayerList.matches(event) ? false : this.tabDown;
 		return super.keyReleased(event);
-	}
-
-	@Override
-	public boolean charTyped(CharacterEvent event) {
-		if (!C030IfyClient.classicGui) {
-			return super.charTyped(event);
-		}
-		String eventCharacter = event.codepointAsString();
-
-		if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.:-_\'*!\\\"#%/()=+?[]{}<>@|$;"
-				.indexOf(eventCharacter) >= 0
-				&& this.input.getValue().length() < 64 - (this.minecraft.getUser().getName().length() + 2)) {
-			this.input.setValue(this.input.getValue() + eventCharacter);
-		}
-
-		return true;
-	}
-
-	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
-	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
-			final float a, CallbackInfo i) {
-		if (C030IfyClient.classicGui) {
-			graphics.fill(2, this.height - 14, this.width - 2, this.height - 2,
-					this.minecraft.options.getBackgroundColor(Integer.MIN_VALUE));
-			this.minecraft.gui.hud.getChat().extractRenderState(graphics, this.font,
-					this.minecraft.gui.hud.getGuiTicks(), mouseX, mouseY, ChatComponent.DisplayMode.FOREGROUND, false);
-			super.extractRenderState(graphics, mouseX, mouseY, a);
-			this.extractTabList(graphics);
-			i.cancel();
-		}
 	}
 
 	@Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
@@ -136,26 +156,6 @@ public class ChatScreenMixin extends Screen { // Direct painful integration
 			}
 			i.setReturnValue(super.mouseClicked(event, doubleClick));
 			i.cancel();
-		}
-	}
-
-	// Patches for the rebellion \/
-
-	@Inject(method = "init", at = @At("TAIL"), cancellable = true)
-	public void init(CallbackInfo i) {
-		this.tabList = new PlayerTabOverlay(minecraft, this.minecraft.gui.hud);
-	}
-
-	private void extractTabList(final GuiGraphicsExtractor graphics) {
-		Scoreboard scoreboard = this.minecraft.level.getScoreboard();
-		Objective displayObjective = scoreboard.getDisplayObjective(DisplaySlot.LIST);
-		if (!tabDown
-			|| this.minecraft.isLocalServer() && this.minecraft.player.connection.getListedOnlinePlayers().size() <= 1 && displayObjective == null) {
-			this.tabList.setVisible(false);
-		} else {
-			this.tabList.setVisible(true);
-			graphics.nextStratum();
-			this.tabList.extractRenderState(graphics, graphics.guiWidth(), scoreboard, displayObjective);
 		}
 	}
 }

@@ -12,9 +12,9 @@ public interface ScreenAccessor {
     @Accessor("font")
     Font c0_30ify$getFont();
 
-    @Accessor("width")
-    int c0_30ify$getWidth();
-
     @Accessor("height")
     int c0_30ify$getHeight();
+
+    @Accessor("width")
+    int c0_30ify$getWidth();
 }

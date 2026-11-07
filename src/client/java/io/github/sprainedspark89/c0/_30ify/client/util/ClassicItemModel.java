@@ -25,7 +25,38 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public final class ClassicItemModel implements ItemModel {
+	private static QuadCollection build(
+	        TextureAtlasSprite sprite,
+	        ModelBaker.Interner interner,
+	        BakedQuad.MaterialInfo materialInfo) {
+		Vector3f from = new Vector3f(6,6,6);
+		Vector3f to   = new Vector3f(10,10,10);
+								CuboidFace.UVs uvs = new CuboidFace.UVs(
+									    0.0F,
+									    0.0F,
+									    8.0F,
+									    8.0F
+									);
+
+		QuadCollection.Builder builder = new QuadCollection.Builder();
+		for(Direction dir : Direction.values()) {
+			builder.addCulledFace(dir, FaceBakery.bakeQuad(
+			    interner,
+			    from,
+			    to,
+			    uvs,
+			    Quadrant.R0,
+			    materialInfo,
+			    dir,
+			    BlockModelRotation.IDENTITY,
+			    null
+			));
+		}
+
+		return builder.build();
+	}
 	private final QuadCollection quads;
+
 	private final QuadCollection whiteQuads = null;
 
 	public ClassicItemModel(TextureAtlasSprite sprite, ModelBaker.Interner interner) {
@@ -66,37 +97,6 @@ public final class ClassicItemModel implements ItemModel {
 //		ItemStackRenderState.LayerRenderState whiteLayer = output.newLayer();
 //
 //		whiteLayer.prepareQuadList().addAll(this.whiteQuads.getAll());
-	}
-
-	private static QuadCollection build(
-	        TextureAtlasSprite sprite,
-	        ModelBaker.Interner interner,
-	        BakedQuad.MaterialInfo materialInfo) {
-		Vector3f from = new Vector3f(6,6,6);
-		Vector3f to   = new Vector3f(10,10,10);
-								CuboidFace.UVs uvs = new CuboidFace.UVs(
-									    0.0F,
-									    0.0F,
-									    8.0F,
-									    8.0F
-									);
-
-		QuadCollection.Builder builder = new QuadCollection.Builder();
-		for(Direction dir : Direction.values()) {
-			builder.addCulledFace(dir, FaceBakery.bakeQuad(
-			    interner,
-			    from,
-			    to,
-			    uvs,
-			    Quadrant.R0,
-			    materialInfo,
-			    dir,
-			    BlockModelRotation.IDENTITY,
-			    null
-			));
-		}
-
-		return builder.build();
 	}
 
 }

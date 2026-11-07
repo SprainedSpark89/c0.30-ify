@@ -13,6 +13,43 @@ public final class PauseScreenClassic extends Screen {
 	}
 
 	@Override
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	}
+
+//	protected final void buttonClicked(Button button) {
+//		if(button.id == 0) {
+//			this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));
+//		}
+//
+//		if(button.id == 1) {
+//			this.minecraft.setScreen(new NewLevelScreen(this));
+//		}
+//
+//		if(this.minecraft.user != null) {
+//			if(button.id == 2) {
+//				this.minecraft.setScreen(new SaveLevelScreen(this));
+//			}
+//
+//			if(button.id == 3) {
+//				this.minecraft.setScreen(new LoadLevelScreen(this));
+//			}
+//		}
+//
+//		if(button.id == 4) {
+//			this.minecraft.setScreen((Screen)null);
+//			this.minecraft.grabMouse();
+//		}
+//
+//	}
+	@Override
+	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+//		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+		graphics.centeredText(this.font, "Game menu", this.width / 2, 40, 0xFFFFFFFF);
+		super.extractRenderState(graphics, mouseX, mouseY, a);
+	}
+
+	@Override
 	public final void init() {
 //		this.buttons.clear();
 //		this.buttons.add(new Button(0, this.width / 2 - 100, this.height / 4, "Options..."));
@@ -55,42 +92,5 @@ public final class PauseScreenClassic extends Screen {
 			loadLevel.active = false;
 		}
 
-	}
-
-//	protected final void buttonClicked(Button button) {
-//		if(button.id == 0) {
-//			this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));
-//		}
-//
-//		if(button.id == 1) {
-//			this.minecraft.setScreen(new NewLevelScreen(this));
-//		}
-//
-//		if(this.minecraft.user != null) {
-//			if(button.id == 2) {
-//				this.minecraft.setScreen(new SaveLevelScreen(this));
-//			}
-//
-//			if(button.id == 3) {
-//				this.minecraft.setScreen(new LoadLevelScreen(this));
-//			}
-//		}
-//
-//		if(button.id == 4) {
-//			this.minecraft.setScreen((Screen)null);
-//			this.minecraft.grabMouse();
-//		}
-//
-//	}
-	@Override
-	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-//		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
-		graphics.centeredText(this.font, "Game menu", this.width / 2, 40, 0xFFFFFFFF);
-		super.extractRenderState(graphics, mouseX, mouseY, a);
-	}
-
-	@Override
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
 	}
 }

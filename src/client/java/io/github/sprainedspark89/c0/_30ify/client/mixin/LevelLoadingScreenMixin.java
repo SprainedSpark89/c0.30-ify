@@ -20,18 +20,6 @@ import net.minecraft.util.Mth;
 @Mixin(LevelLoadingScreen.class)
 public abstract class LevelLoadingScreenMixin extends Screen {
 
-	protected LevelLoadingScreenMixin(Component title) {
-		super(title);
-		// TODO Auto-generated constructor stub
-	}
-
-	@Shadow
-	@Final
-	private static Component DOWNLOADING_TERRAIN_TEXT;
-
-	@Shadow
-	private float smoothedProgress;
-
 	private static final Identifier DIRT = Identifier.withDefaultNamespace("textures/gui/menu_background.png"); // texture
 	// packs
 	// like
@@ -41,6 +29,18 @@ public abstract class LevelLoadingScreenMixin extends Screen {
 	// make
 	// this
 	// dirt?
+
+	@Shadow
+	@Final
+	private static Component DOWNLOADING_TERRAIN_TEXT;
+
+	@Shadow
+	private float smoothedProgress;
+
+	protected LevelLoadingScreenMixin(Component title) {
+		super(title);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
 	private void c0_30ify$renderClassicLoadingScreen(GuiGraphicsExtractor graphics, int mouseX, int mouseY,

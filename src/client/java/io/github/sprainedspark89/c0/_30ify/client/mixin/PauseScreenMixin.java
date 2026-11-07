@@ -16,14 +16,14 @@ import net.minecraft.network.chat.Component;
 
 @Mixin(PauseScreen.class)
 public class PauseScreenMixin extends Screen {
+	@Shadow
+	@Final
+	private boolean showPauseMenu;
+
 	protected PauseScreenMixin(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Shadow
-	@Final
-	private boolean showPauseMenu;
 
 	@Inject(method = "init", at = @At("TAIL"))
 	public void init(CallbackInfo i) {

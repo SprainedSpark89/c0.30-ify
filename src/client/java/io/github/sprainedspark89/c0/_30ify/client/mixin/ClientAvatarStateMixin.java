@@ -17,23 +17,23 @@ public class ClientAvatarStateMixin implements AvatarStateAccessor {
 	private float classicTiltO;
 
 	@Override
+	public float getClassicTilt() {
+		return classicTilt;
+	}
+
+	@Override
 	public float getInterpolatedClassicTilt(DeltaTracker partialTick) {
 	    return Mth.lerp(partialTick.getGameTimeDeltaTicks(), classicTiltO, getClassicTilt());
+	}
+
+	@Override
+	public void setClassicTilt(float classicTilt) {
+		this.classicTilt = classicTilt;
 	}
 
 	@Override
 	public void updateTilt(final float tTilt) {
 		this.classicTiltO = this.getClassicTilt();
 		this.setClassicTilt(this.getClassicTilt() + (tTilt - this.getClassicTilt()) * 0.8F);
-	}
-
-	@Override
-	public float getClassicTilt() {
-		return classicTilt;
-	}
-
-	@Override
-	public void setClassicTilt(float classicTilt) {
-		this.classicTilt = classicTilt;
 	}
 }

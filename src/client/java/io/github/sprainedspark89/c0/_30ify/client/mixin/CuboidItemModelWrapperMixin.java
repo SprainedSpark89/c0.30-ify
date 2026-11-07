@@ -23,8 +23,27 @@ import net.minecraft.resources.Identifier;
 @Mixin(CuboidItemModelWrapper.Unbaked.class)
 public abstract class CuboidItemModelWrapperMixin {
 
-    @Shadow
-    public abstract Identifier model();
+    @Inject(
+    	    method = "bake",
+    	    at = @At("RETURN")
+    	)
+    	private void c030$cacheClassicModel(
+    	        ItemModel.BakingContext context,
+    	        Matrix4fc transformation,
+    	        CallbackInfoReturnable<ItemModel> cir) {
+
+    	ModelBaker baker = context.blockModelBaker();
+    	ResolvedModel resolved = baker.getModel(this.model());
+    	TextureSlots slots = resolved.getTopTextureSlots();
+
+    	TextureAtlasSprite sprite =
+    	    resolved.resolveParticleMaterial(slots, baker).sprite();
+
+    	ClassicItemModels.MODELS.put(
+    	    this.model().withPath(this.model().getPath().replaceFirst("item/", "").replaceFirst("block/", "")),
+    	    new ClassicItemModel(sprite, new InternerImpl())
+    	);
+        }
 
     @Redirect(
         method = "bake",
@@ -51,25 +70,6 @@ public abstract class CuboidItemModelWrapperMixin {
         return baker.getModel(originalModel);
     }
 
-    @Inject(
-    	    method = "bake",
-    	    at = @At("RETURN")
-    	)
-    	private void c030$cacheClassicModel(
-    	        ItemModel.BakingContext context,
-    	        Matrix4fc transformation,
-    	        CallbackInfoReturnable<ItemModel> cir) {
-
-    	ModelBaker baker = context.blockModelBaker();
-    	ResolvedModel resolved = baker.getModel(this.model());
-    	TextureSlots slots = resolved.getTopTextureSlots();
-
-    	TextureAtlasSprite sprite =
-    	    resolved.resolveParticleMaterial(slots, baker).sprite();
-
-    	ClassicItemModels.MODELS.put(
-    	    this.model().withPath(this.model().getPath().replaceFirst("item/", "").replaceFirst("block/", "")),
-    	    new ClassicItemModel(sprite, new InternerImpl())
-    	);
-        }
+    @Shadow
+    public abstract Identifier model();
 }

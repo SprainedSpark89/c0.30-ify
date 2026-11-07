@@ -13,11 +13,6 @@ import net.minecraft.resources.Identifier;
 @Mixin(GenericMessageScreen.class)
 public abstract class GenericMessageScreenMixin extends Screen {
 
-	protected GenericMessageScreenMixin(Component title) {
-		super(title);
-		// TODO Auto-generated constructor stub
-	}
-
 	private static final Identifier DIRT = Identifier.withDefaultNamespace("textures/gui/menu_background.png"); // texture
 	// packs
 	// like
@@ -28,9 +23,9 @@ public abstract class GenericMessageScreenMixin extends Screen {
 	// this
 	// dirt?
 
-	@Override
-	@Overwrite
-	protected void repositionElements() {
+	protected GenericMessageScreenMixin(Component title) {
+		super(title);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -52,6 +47,11 @@ public abstract class GenericMessageScreenMixin extends Screen {
 
 
 		graphics.text(font, this.title, (i8 - this.font.width(this.title)) / 2, i3 / 2 - 4 + 8, 0xFFFFFFFF);
+	}
+
+	@Override
+	@Overwrite
+	protected void repositionElements() {
 	}
 
 	public String titleCase(String s) {

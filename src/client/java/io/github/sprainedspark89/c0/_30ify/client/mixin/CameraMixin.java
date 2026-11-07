@@ -18,7 +18,10 @@ import net.minecraft.world.entity.Entity;
 @Mixin(Camera.class)
 public class CameraMixin {
 
-	@Inject(method = "extractRenderState", at = @At("TAIL"))
+	@Shadow
+    private Entity entity;
+
+    @Inject(method = "extractRenderState", at = @At("TAIL"))
 	private void c030ify$copyClassicTilt(
 	        CameraRenderState cameraState,
 	        DeltaTracker deltaTracker,
@@ -34,7 +37,4 @@ public class CameraMixin {
 	            );
 	    }
 	}
-
-    @Shadow
-    private Entity entity;
 }

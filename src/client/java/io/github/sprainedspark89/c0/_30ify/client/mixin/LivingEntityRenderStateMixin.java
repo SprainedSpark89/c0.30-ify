@@ -12,32 +12,32 @@ public class LivingEntityRenderStateMixin implements LivingEntityRenderStateAcce
 	@Unique
 	float hurtDir;
 	@Unique
-	float hurtTime;
-	@Unique
 	int hurtDuration;
+	@Unique
+	float hurtTime;
 
 	@Override
 	public float getHurtDir() {
 		return hurtDir;
 	}
 	@Override
-	public void setHurtDir(float hurtDir) {
-		this.hurtDir = hurtDir;
+	public int getHurtDuration() {
+		return hurtDuration;
 	}
 	@Override
 	public float getHurtTime() {
 		return hurtTime;
 	}
 	@Override
-	public void setHurtTime(float hurtTime) {
-		this.hurtTime = hurtTime;
-	}
-	@Override
-	public int getHurtDuration() {
-		return hurtDuration;
+	public void setHurtDir(float hurtDir) {
+		this.hurtDir = hurtDir;
 	}
 	@Override
 	public void setHurtDuration(int hurtDuration) {
 		this.hurtDuration = hurtDuration;
+	}
+	@Override
+	public void setHurtTime(float hurtTime) {
+		this.hurtTime = hurtTime;
 	}
 }

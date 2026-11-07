@@ -23,14 +23,6 @@ public abstract class PlayerTabOverlayMixin {
 	@Shadow
 	private Minecraft minecraft;
 
-	@Shadow
-	private List<PlayerInfo> getPlayerInfos() {
-		throw new AssertionError();
-	}
-
-	@Shadow
-	public abstract Component getNameForDisplay(PlayerInfo info);
-
 	@Inject(method = "extractRenderState", at = @At("HEAD"), cancellable = true)
 	private void c030ify$renderClassicPlayerList(GuiGraphicsExtractor graphics, int screenWidth, Scoreboard scoreboard,
 			Objective displayObjective, CallbackInfo ci) {
@@ -79,6 +71,14 @@ public abstract class PlayerTabOverlayMixin {
 		if(!hasHovered) {
 			C030IfyClient.hoveredUsername = null;
 		}
+	}
+
+	@Shadow
+	public abstract Component getNameForDisplay(PlayerInfo info);
+
+	@Shadow
+	private List<PlayerInfo> getPlayerInfos() {
+		throw new AssertionError();
 	}
 
 }

@@ -4,14 +4,14 @@ public interface LivingEntityRenderStateAccessor {
 
 	float getHurtDir();
 
-	void setHurtDir(float hurtDir);
+	int getHurtDuration();
 
 	float getHurtTime();
 
-	void setHurtTime(float hurtTime);
-
-	int getHurtDuration();
+	void setHurtDir(float hurtDir);
 
 	void setHurtDuration(int hurtDuration);
+
+	void setHurtTime(float hurtTime);
 
 }

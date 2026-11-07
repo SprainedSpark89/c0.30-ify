@@ -16,6 +16,37 @@ public final class DeathScreenClassic extends Screen {
 	}
 
 	@Override
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+		graphics.fillGradient(0, 0, this.width, this.height, 1615855616, -1602211792);
+	}
+
+//	protected final void buttonClicked(Button button) {
+//		if(button.id == 0) {
+//			this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));
+//		}
+//
+//		if(button.id == 1) {
+//			this.minecraft.setScreen(new NewLevelScreen(this));
+//		}
+//
+//		if(this.minecraft.user != null && button.id == 2) {
+//			this.minecraft.setScreen(new LoadLevelScreen(this));
+//		}
+//
+//	}
+
+	@Override
+	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+//		fillGradient(0, 0, this.width, this.height, 1615855616, -1602211792);
+		graphics.pose().pushMatrix();
+		graphics.pose().scale(2F);
+		graphics.centeredText(this.font, "Game over!", this.width / 2 / 2, 30, 0xFFFFFFFF);
+		graphics.pose().popMatrix();
+		graphics.centeredText(this.font, "Score: §e" + this.minecraft.player.getScore(), this.width / 2, 100, 0xFFFFFFFF);
+		super.extractRenderState(graphics, mouseX, mouseY, a);
+	}
+
+	@Override
 	public final void init() {
 //		this.buttons.clear();
 		Button gen = this
@@ -39,36 +70,5 @@ public final class DeathScreenClassic extends Screen {
 			load.active = false;
 		}
 
-	}
-
-//	protected final void buttonClicked(Button button) {
-//		if(button.id == 0) {
-//			this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options));
-//		}
-//
-//		if(button.id == 1) {
-//			this.minecraft.setScreen(new NewLevelScreen(this));
-//		}
-//
-//		if(this.minecraft.user != null && button.id == 2) {
-//			this.minecraft.setScreen(new LoadLevelScreen(this));
-//		}
-//
-//	}
-
-	@Override
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-		graphics.fillGradient(0, 0, this.width, this.height, 1615855616, -1602211792);
-	}
-
-	@Override
-	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-//		fillGradient(0, 0, this.width, this.height, 1615855616, -1602211792);
-		graphics.pose().pushMatrix();
-		graphics.pose().scale(2F);
-		graphics.centeredText(this.font, "Game over!", this.width / 2 / 2, 30, 0xFFFFFFFF);
-		graphics.pose().popMatrix();
-		graphics.centeredText(this.font, "Score: §e" + this.minecraft.player.getScore(), this.width / 2, 100, 0xFFFFFFFF);
-		super.extractRenderState(graphics, mouseX, mouseY, a);
 	}
 }

@@ -18,19 +18,19 @@ public abstract class MixinHumanoidModel<T extends HumanoidRenderState> {
 
 	@Shadow
 	@Final
-	public ModelPart rightArm;
-
-	@Shadow
-	@Final
 	public ModelPart leftArm;
 
 	@Shadow
 	@Final
-	public ModelPart rightLeg;
+	public ModelPart leftLeg;
 
 	@Shadow
 	@Final
-	public ModelPart leftLeg;
+	public ModelPart rightArm;
+
+	@Shadow
+	@Final
+	public ModelPart rightLeg;
 
 	@Inject(
 			method = "setupAnim",

@@ -11,11 +11,11 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 
 public final class ControlsScreenClassic extends Screen {
-	private Screen parent;
-	private String title = "Controls";
 	private Options options;
+	private Screen parent;
 	private Button selectedButton = null;
 	private KeyMapping selectedKey = null;
+	private String title = "Controls";
 
 	public ControlsScreenClassic(Screen screen, Options options) {
 		super(Component.literal("Controls"));
@@ -24,7 +24,33 @@ public final class ControlsScreenClassic extends Screen {
 	}
 
 	@Override
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	}
+
+	@Override
+	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
+//		fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+		graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
+		super.extractRenderState(graphics, mouseX, mouseY, a);
+	}
+
+//	protected final void buttonClicked(Button button) {
+//		for(int i2 = 0; i2 < this.options.keys.length; ++i2) {
+//			((Button)this.buttons.get(i2)).msg = this.options.getKeyMessage(i2);
+//		}
+//
+//		if(button.id == 200) {
+//			this.minecraft.setScreen(this.parent);
+//		} else {
+//			this.selectedKey = button.id;
+//			button.msg = "> " + this.options.getKeyMessage(button.id) + " <";
+//		}
+//	}
+
+	@Override
 	public final void init() {
+		this.minecraft.onTextInputFocusChange(this, true);
 //		System.out.println(width + " x " + height);
 		for(int i1 = 0; i1 < this.options.keyMappings.length; ++i1) {
 			this.makeButton(i1);
@@ -37,6 +63,18 @@ public final class ControlsScreenClassic extends Screen {
 								var1 -> this.minecraft.gui
 										.setScreen(this.parent))
 						.bounds(this.width / 2 - 100, this.height / 6 + 168, 200, 20).build());
+	}
+
+	@Override
+	public boolean keyPressed(final KeyEvent event) {
+		if(this.selectedButton != null) {
+			this.selectedKey.setKey(InputConstants.getKey(event));
+			this.selectedButton.setMessage(Component.literal(Component.translatable(this.selectedKey.getName()).getString() + ": " + selectedKey.getTranslatedKeyMessage().getString()));
+			this.selectedButton = null;
+			return true;
+		} else {
+			return super.keyPressed(event);
+		}
 	}
 
 	public void makeButton(int i1) {
@@ -69,41 +107,10 @@ public final class ControlsScreenClassic extends Screen {
 //		System.out.println("Button Width:" + optionButton.getWidth());
 //		System.out.println("Button Height:" + optionButton.getHeight());
 	}
-
-//	protected final void buttonClicked(Button button) {
-//		for(int i2 = 0; i2 < this.options.keys.length; ++i2) {
-//			((Button)this.buttons.get(i2)).msg = this.options.getKeyMessage(i2);
-//		}
-//
-//		if(button.id == 200) {
-//			this.minecraft.setScreen(this.parent);
-//		} else {
-//			this.selectedKey = button.id;
-//			button.msg = "> " + this.options.getKeyMessage(button.id) + " <";
-//		}
-//	}
-
+	
 	@Override
-	public boolean keyPressed(final KeyEvent event) {
-		if(this.selectedButton != null) {
-			this.selectedKey.setKey(InputConstants.getKey(event));
-			this.selectedButton.setMessage(Component.literal(Component.translatable(this.selectedKey.getName()).getString() + ": " + selectedKey.getTranslatedKeyMessage().getString()));
-			this.selectedButton = null;
-			return true;
-		} else {
-			return super.keyPressed(event);
-		}
-	}
-
-	@Override
-	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-//		fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
-		graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
-		super.extractRenderState(graphics, mouseX, mouseY, a);
-	}
-
-	@Override
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a) {
-		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	public void removed() {
+	    this.minecraft.onTextInputFocusChange(this, false);
+	    super.removed();
 	}
 }

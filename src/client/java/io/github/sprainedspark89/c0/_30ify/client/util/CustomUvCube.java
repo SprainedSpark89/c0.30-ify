@@ -13,18 +13,15 @@ import net.minecraft.core.Direction;
  * UV coordinates are in texture pixels, not normalized coordinates.
  */
 public final class CustomUvCube {
-	private static final float TEXTURE_WIDTH = 64.0F;
-	private static final float TEXTURE_HEIGHT = 64.0F;
-
-	private CustomUvCube() {
-	}
-
 	/**
 	 * The UV rectangle for one face. Coordinates are deliberately not reordered:
 	 * reversed U or V values can be used to preserve the orientation of a texture.
 	 */
 	public record FaceUV(float u0, float v0, float u1, float v1) {
 	}
+	private static final float TEXTURE_HEIGHT = 64.0F;
+
+	private static final float TEXTURE_WIDTH = 64.0F;
 
 	/**
 	 * Creates a cube with custom UVs for all six faces.
@@ -66,5 +63,8 @@ public final class CustomUvCube {
 		}
 
 		return cube;
+	}
+
+	private CustomUvCube() {
 	}
 }

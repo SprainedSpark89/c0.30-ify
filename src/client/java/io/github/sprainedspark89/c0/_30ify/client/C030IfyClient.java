@@ -14,12 +14,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 public class C030IfyClient implements ClientModInitializer {
-	public static boolean classicGui = true;
-	public static KeyMapping toggleC030GUI;
 	private static final KeyMapping.Category CATEGORY = KeyMapping.Category
 			.register(Identifier.fromNamespaceAndPath(C030Ify.MOD_ID, "key.categories.c030ify"));
-
+	public static boolean classicGui = true;
 	public static String hoveredUsername = null;
+
+	public static KeyMapping toggleC030GUI;
 
 	@Override
 	public void onInitializeClient() {

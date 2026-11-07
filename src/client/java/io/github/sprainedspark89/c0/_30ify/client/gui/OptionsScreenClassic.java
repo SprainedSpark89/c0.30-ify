@@ -13,10 +13,10 @@ import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.Component;
 
 public final class OptionsScreenClassic extends Screen {
+	private OptionInstance[] menuOptions;
+	private Options options;
 	private Screen parent;
 	private String title = "Options";
-	private Options options;
-	private OptionInstance[] menuOptions;
 
 	public OptionsScreenClassic(Screen screen, Options options) {
 		super(Component.literal("Options"));
@@ -26,16 +26,26 @@ public final class OptionsScreenClassic extends Screen {
 	}
 
 	@Override
-	public boolean keyPressed(final KeyEvent event) {
-		if (C030IfyClient.toggleC030GUI.matches(event)) {
-			C030IfyClient.classicGui = !C030IfyClient.classicGui;
-			this.minecraft.gui.setScreen(new OptionsScreen(parent, options));
-		}
-		return super.keyPressed(event);
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
+			final float a) {
+		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	}
+
+	@Override
+	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
+			final float a) {
+		// fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+		graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
+		super.extractRenderState(graphics, mouseX, mouseY, a);
+	}
+
+	public String getDisplayString(OptionInstance option) {
+		return ClassicOptions.getMessage(option, options);
 	}
 
 	@Override
 	public final void init() {
+		this.minecraft.onTextInputFocusChange(this, true);
 		for (int i1 = 0; i1 < this.menuOptions.length; ++i1) {
 			// this.menuOptions[i1].createButton(options, this.width / 2 - 155 + i1 % 2 *
 			// 160, this.height / 6 + 24 * (i1 >> 1), 150);
@@ -57,24 +67,6 @@ public final class OptionsScreenClassic extends Screen {
 				.bounds(this.width / 2 - 100, this.height / 6 + 168, 200, 20).build());
 	}
 
-	public void makeButton(int i1, OptionInstance option) {
-		int x = this.width / 2 - 155 + i1 % 2 * 160, y = this.height / 6 + 24 * (i1 >> 1);
-		Button optionButton = this
-				.addRenderableWidget(Button.builder(Component.literal(getDisplayString(option)), var1 -> {
-					ClassicOptions.handleOptionChange(option, options);
-
-					if (option == ClassicOptions.SHOW_FPS) {
-						ClassicOptions.saveSettings();
-					}
-
-					var1.setMessage(Component.literal(getDisplayString(option)));
-				}).bounds(x, y, 150, 20).build());
-	}
-
-	public String getDisplayString(OptionInstance option) {
-		return ClassicOptions.getMessage(option, options);
-	}
-
 	// protected final void buttonClicked(Button button) {
 	// if(button.enabled) {
 	// if(button.id < 100) {
@@ -94,16 +86,31 @@ public final class OptionsScreenClassic extends Screen {
 	// }
 
 	@Override
-	public void extractRenderState(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
-			final float a) {
-		// fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
-		graphics.centeredText(this.font, this.title, this.width / 2, 20, 0xFFFFFFFF);
-		super.extractRenderState(graphics, mouseX, mouseY, a);
+	public boolean keyPressed(final KeyEvent event) {
+		if (C030IfyClient.toggleC030GUI.matches(event)) {
+			C030IfyClient.classicGui = !C030IfyClient.classicGui;
+			this.minecraft.gui.setScreen(new OptionsScreen(parent, options));
+		}
+		return super.keyPressed(event);
 	}
 
+	public void makeButton(int i1, OptionInstance option) {
+		int x = this.width / 2 - 155 + i1 % 2 * 160, y = this.height / 6 + 24 * (i1 >> 1);
+		Button optionButton = this
+				.addRenderableWidget(Button.builder(Component.literal(getDisplayString(option)), var1 -> {
+					ClassicOptions.handleOptionChange(option, options);
+
+					if (option == ClassicOptions.SHOW_FPS) {
+						ClassicOptions.saveSettings();
+					}
+
+					var1.setMessage(Component.literal(getDisplayString(option)));
+				}).bounds(x, y, 150, 20).build());
+	}
+	
 	@Override
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY,
-			final float a) {
-		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	public void removed() {
+	    this.minecraft.onTextInputFocusChange(this, false);
+	    super.removed();
 	}
 }

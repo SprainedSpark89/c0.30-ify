@@ -42,77 +42,11 @@ public class GuiMainTitle extends Screen {
 																												// was
 																												// added
 
-	@Override
-	public boolean shouldCloseOnEsc() {
-		this.minecraft.gui.setScreen(new TitleScreen());
-		return false;
-	}
+	private float updateCounter = 0.0F;
 
 	public GuiMainTitle(Component title) {
 		super(title);
 		// TODO Auto-generated constructor stub
-	}
-
-	private float updateCounter = 0.0F;
-
-	@Override
-	public void tick() {
-		this.updateCounter += 0.01F;
-	}
-
-	// should implement something like this to actually escape the fake titlescreen
-	// protected final void keyTyped(char c1, int i2) {
-	// }
-
-	@Override
-	protected void init() {
-		// this.controlList.clear();
-		// TODO make it open the actual create world screen
-		// below is how the world selection screen does it
-		// this.playWorldButton =
-		// rowHelper.addChild(Button.builder(LevelSummary.PLAY_WORLD, button ->
-		// list.getSelectedOpt().ifPresent(joinWorld)).build(), 2);
-		// rowHelper.addChild(
-		// Button.builder(Component.translatable("selectWorld.create"), button ->
-		// CreateWorldScreen.openFresh(this.minecraft, list::returnToScreen)).build(), 2
-		// );
-		Button newLevel = this.addRenderableWidget(Button
-				.builder(Component.literal("Generate new level..."),
-						var1 -> this.minecraft.gui.setScreen(new NewLevelScreen(this)
-							))
-				.bounds(this.width / 2 - 100, this.height / 4 + 48, 200, 20).build());
-		// this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 +
-		// 48, "Generate new level..."));
-		Button loadLevel = this.addRenderableWidget(Button
-				.builder(Component.literal("Load level.."),
-						var1 -> this.minecraft.gui.setScreen(new LoadLevelScreen(this)))
-				.bounds(this.width / 2 - 100, this.height / 4 + 72, 200, 20).build());
-
-		// this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 +
-		// 72, "Load level.."));
-		// need to make options between realms and normal multiplayer
-		Button tutorial = this.addRenderableWidget(Button
-				.builder(Component.literal("Connect to level..."),
-						var1 -> this.minecraft.gui.setScreen(new MultiplayerScreenClassicStyle(this)))
-				.bounds(this.width / 2 - 100, this.height / 4 + 96, 200, 20).build());
-		// tutorial.active = false;
-		// this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 +
-		// 96, "Play tutorial level"));
-		Button options = this
-				.addRenderableWidget(Button
-						.builder(Component.literal("Options..."),
-								var1 -> this.minecraft.gui
-										.setScreen(new OptionsScreen(this, this.minecraft.options)))
-						.bounds(this.width / 2 - 100, this.height / 4 + 120 + 12, 200, 20).build());
-		// this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 +
-		// 120 + 12, "Options..."));
-		// ((GuiButton)this.controlList.get(2)).enabled = false;
-//		tutorial.active = this.minecraft.allowsMultiplayer() && !this.minecraft.isNameBanned();
-		if (this.minecraft.getUser() == null) {
-			loadLevel.active = false;
-			tutorial.active = false;
-		}
-
 	}
 
 	// protected final void actionPerformed(GuiButton guiButton1) {
@@ -192,5 +126,71 @@ public class GuiMainTitle extends Screen {
 		// b(this.fontRenderer, string5, this.width -
 		// this.fontRenderer.getStringWidth(string5) - 2, this.height - 10, 0xFFFFFF);
 		super.extractRenderState(graphics, mouseX, mouseY, a);
+	}
+
+	// should implement something like this to actually escape the fake titlescreen
+	// protected final void keyTyped(char c1, int i2) {
+	// }
+
+	@Override
+	protected void init() {
+		// this.controlList.clear();
+		// TODO make it open the actual create world screen
+		// below is how the world selection screen does it
+		// this.playWorldButton =
+		// rowHelper.addChild(Button.builder(LevelSummary.PLAY_WORLD, button ->
+		// list.getSelectedOpt().ifPresent(joinWorld)).build(), 2);
+		// rowHelper.addChild(
+		// Button.builder(Component.translatable("selectWorld.create"), button ->
+		// CreateWorldScreen.openFresh(this.minecraft, list::returnToScreen)).build(), 2
+		// );
+		Button newLevel = this.addRenderableWidget(Button
+				.builder(Component.literal("Generate new level..."),
+						var1 -> this.minecraft.gui.setScreen(new NewLevelScreen(this)
+							))
+				.bounds(this.width / 2 - 100, this.height / 4 + 48, 200, 20).build());
+		// this.controlList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 +
+		// 48, "Generate new level..."));
+		Button loadLevel = this.addRenderableWidget(Button
+				.builder(Component.literal("Load level.."),
+						var1 -> this.minecraft.gui.setScreen(new LoadLevelScreen(this)))
+				.bounds(this.width / 2 - 100, this.height / 4 + 72, 200, 20).build());
+
+		// this.controlList.add(new GuiButton(2, this.width / 2 - 100, this.height / 4 +
+		// 72, "Load level.."));
+		// need to make options between realms and normal multiplayer
+		Button tutorial = this.addRenderableWidget(Button
+				.builder(Component.literal("Connect to level..."),
+						var1 -> this.minecraft.gui.setScreen(new MultiplayerScreenClassicStyle(this)))
+				.bounds(this.width / 2 - 100, this.height / 4 + 96, 200, 20).build());
+		// tutorial.active = false;
+		// this.controlList.add(new GuiButton(3, this.width / 2 - 100, this.height / 4 +
+		// 96, "Play tutorial level"));
+		Button options = this
+				.addRenderableWidget(Button
+						.builder(Component.literal("Options..."),
+								var1 -> this.minecraft.gui
+										.setScreen(new OptionsScreen(this, this.minecraft.options)))
+						.bounds(this.width / 2 - 100, this.height / 4 + 120 + 12, 200, 20).build());
+		// this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 +
+		// 120 + 12, "Options..."));
+		// ((GuiButton)this.controlList.get(2)).enabled = false;
+//		tutorial.active = this.minecraft.allowsMultiplayer() && !this.minecraft.isNameBanned();
+		if (this.minecraft.getUser() == null) {
+			loadLevel.active = false;
+			tutorial.active = false;
+		}
+
+	}
+
+	@Override
+	public boolean shouldCloseOnEsc() {
+		this.minecraft.gui.setScreen(new TitleScreen());
+		return false;
+	}
+
+	@Override
+	public void tick() {
+		this.updateCounter += 0.01F;
 	}
 }

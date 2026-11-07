@@ -19,15 +19,15 @@ public class TitleScreenMixin extends Screen {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Inject(method = "extractBackground", at = @At("HEAD"))
+	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a, CallbackInfo i) {
+		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
+	}
+
 	@Inject(method = "init", at = @At("TAIL"))
 	public void init(CallbackInfo i) {
 		if(C030IfyClient.classicGui) {
 			this.minecraft.gui.setScreen(new GuiMainTitle(Component.literal("Title Screen")));
 		}
-	}
-
-	@Inject(method = "extractBackground", at = @At("HEAD"))
-	public void extractBackground(final GuiGraphicsExtractor graphics, final int mouseX, final int mouseY, final float a, CallbackInfo i) {
-		graphics.fillGradient(0, 0, this.width, this.height, 1610941696, -1607454624);
 	}
 }

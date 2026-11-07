@@ -9,16 +9,16 @@ import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 
 public class InternerImpl implements ModelBaker.Interner {
-		private final Interner<Vector3fc> vectors = Interners.newStrongInterner();
 		private final Interner<BakedQuad.MaterialInfo> materialInfos = Interners.newStrongInterner();
-
-		@Override
-		public Vector3fc vector(final Vector3fc v) {
-			return this.vectors.intern(v);
-		}
+		private final Interner<Vector3fc> vectors = Interners.newStrongInterner();
 
 		@Override
 		public BakedQuad.MaterialInfo materialInfo(final BakedQuad.MaterialInfo material) {
 			return this.materialInfos.intern(material);
+		}
+
+		@Override
+		public Vector3fc vector(final Vector3fc v) {
+			return this.vectors.intern(v);
 		}
 	}
